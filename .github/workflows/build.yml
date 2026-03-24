@@ -1,0 +1,54 @@
+name: Build Website, Docs & PDF
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # --- Node (Astro + mermaid-cli) ---
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build Astro site
+        run: npx astro build
+
+      # --- Python (MkDocs) ---
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install MkDocs dependencies
+        run: pip install -r requirements-docs.txt
+
+      - name: Build docs (HTML)
+        run: mkdocs build -f mkdocs.yml
+
+      # --- PDF generation ---
+      - name: Install Chromium for PDF rendering
+        run: sudo apt-get update && sudo apt-get install -y chromium-browser
+
+      - name: Build PDF
+        run: bash scripts/build-pdf.sh
+
+      # --- Upload artifact ---
+      - name: Upload dist
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: dist/
