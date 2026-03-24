@@ -3,6 +3,9 @@ name: Generate PDF Documentation
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   pdf:
     runs-on: ubuntu-latest
