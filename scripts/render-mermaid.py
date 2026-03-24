@@ -61,6 +61,8 @@ def render_mermaid_blocks(docs_dir: str, puppeteer_config: str = None) -> int:
                 script_dir = Path(__file__).resolve().parent
                 mermaid_cfg = script_dir / 'mermaid-config.json'
 
+                puppeteer_cfg = script_dir / 'puppeteer-config.json'
+
                 cmd = [
                     'npx', '-y', '@mermaid-js/mermaid-cli',
                     '-i', tmp_path,
@@ -68,10 +70,9 @@ def render_mermaid_blocks(docs_dir: str, puppeteer_config: str = None) -> int:
                     '-b', 'white',
                     '-w', '800',
                     '-c', str(mermaid_cfg),
+                    '-p', str(puppeteer_config or puppeteer_cfg),
                     '--quiet',
                 ]
-                if puppeteer_config:
-                    cmd.extend(['-p', puppeteer_config])
 
                 result = subprocess.run(
                     cmd,
