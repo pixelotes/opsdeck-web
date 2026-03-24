@@ -1,4 +1,4 @@
-name: Build Website, Docs & PDF
+name: Build Website & Docs
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # --- Node (Astro + mermaid-cli) ---
+      # --- Node (Astro) ---
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -38,13 +38,6 @@ jobs:
 
       - name: Build docs (HTML)
         run: mkdocs build -f mkdocs.yml
-
-      # --- PDF generation ---
-      - name: Install Chromium for PDF rendering
-        run: sudo apt-get update && sudo apt-get install -y chromium-browser
-
-      - name: Build PDF
-        run: bash scripts/build-pdf.sh
 
       # --- Upload artifact ---
       - name: Upload dist
