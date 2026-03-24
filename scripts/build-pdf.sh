@@ -6,22 +6,6 @@ WEB_DIR="$(dirname "$SCRIPT_DIR")"
 DOCS_DIR="$WEB_DIR/docs-content"
 BACKUP_DIR=$(mktemp -d)
 
-# Auto-detect Chrome/Chromium binary and generate mkdocs-pdf.yml override
-for bin in chromium-browser chromium google-chrome google-chrome-stable; do
-  if command -v "$bin" &>/dev/null; then
-    CHROME_BIN="$bin"
-    break
-  fi
-done
-
-if [ -z "$CHROME_BIN" ]; then
-  echo "==> ERROR: No Chrome/Chromium binary found"
-  exit 1
-fi
-
-echo "==> Using headless browser: $CHROME_BIN"
-sed -i "s|headless_chrome_path:.*|headless_chrome_path: $CHROME_BIN|" "$WEB_DIR/mkdocs-pdf.yml"
-
 echo "==> Backing up docs-content..."
 cp -a "$DOCS_DIR/." "$BACKUP_DIR/"
 

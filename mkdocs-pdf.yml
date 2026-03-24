@@ -12,5 +12,3 @@ plugins:
       cover_subtitle: IT Operations & Governance Platform
       output_path: export/opsdeck-docs.pdf
       toc_level: 3
-      render_js: true
-      headless_chrome_path: chromium-browser
