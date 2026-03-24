@@ -1,0 +1,253 @@
+---
+const tabs = [
+  {
+    id: 'assets',
+    label: 'Assets',
+    icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+    title: 'Asset & Inventory Management',
+    description: 'A unified register for every asset your team manages — from laptops and servers to SaaS licenses and software.',
+    bullets: [
+      'Full lifecycle tracking: procurement → assignment → maintenance → disposal',
+      'Link assets to users, locations, cost centers, and services',
+      'Manage peripherals, software installs, and license entitlements',
+      'Immutable audit trail for every state change',
+      'Bulk import/export via CSV or REST API',
+    ],
+    gradient: 'from-indigo-600/30 via-indigo-900/20 to-od-surface',
+    accentColor: 'text-indigo-400',
+    badge: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30',
+    label2: 'Assets',
+  },
+  {
+    id: 'compliance',
+    label: 'Compliance',
+    icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    title: 'Compliance & Audit Management',
+    description: 'Map your controls to industry frameworks and generate audit-ready evidence packages without the spreadsheet chaos.',
+    bullets: [
+      'Pre-built frameworks: SOC 2 Type II, ISO 27001, and more',
+      'Control mapping with owner assignment and evidence collection',
+      'Statement of Applicability (SOA) generator',
+      'Immutable audit snapshots for any point in time',
+      'Gap analysis and remediation task tracking',
+    ],
+    gradient: 'from-violet-600/30 via-violet-900/20 to-od-surface',
+    accentColor: 'text-violet-400',
+    badge: 'bg-violet-500/20 text-violet-300 border-violet-500/30',
+    label2: 'Compliance',
+  },
+  {
+    id: 'risk',
+    label: 'Risk',
+    icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>`,
+    title: 'Risk & Security Management',
+    description: 'Maintain a living risk register that stays connected to your assets, vendors, and services — so nothing falls through the cracks.',
+    bullets: [
+      'Risk register with likelihood × impact scoring matrix',
+      'Link risks to assets, services, vendors, and controls',
+      'Security incident tracking with timeline and resolution',
+      'Security assessment scheduling and results',
+      'Risk heatmaps and trend reporting',
+    ],
+    gradient: 'from-rose-600/30 via-rose-900/20 to-od-surface',
+    accentColor: 'text-rose-400',
+    badge: 'bg-rose-500/20 text-rose-300 border-rose-500/30',
+    label2: 'Risk',
+  },
+  {
+    id: 'vendors',
+    label: 'Vendors',
+    icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>`,
+    title: 'Vendor & Procurement Management',
+    description: 'Keep your entire vendor ecosystem organized — from contract lifecycle management to budget oversight and renewal tracking.',
+    bullets: [
+      'Supplier directory with compliance and contact info',
+      'Contract repository with renewal alerts and version control',
+      'Subscription tracking with cost allocation to cost centers',
+      'Budget management and spend reporting',
+      'Payment method and procurement workflow management',
+    ],
+    gradient: 'from-amber-600/30 via-amber-900/20 to-od-surface',
+    accentColor: 'text-amber-400',
+    badge: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
+    label2: 'Vendors',
+  },
+  {
+    id: 'uar',
+    label: 'UAR',
+    icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+    title: 'User Access Review',
+    description: 'Run structured, defensible access reviews on schedule — with automated comparison, finding detection, and immutable records.',
+    bullets: [
+      'Define review cycles with configurable scope and reviewers',
+      'Automated comparison of expected vs. actual access',
+      'Findings surfaced automatically: orphaned, excessive, and ghost accounts',
+      'Reviewer workflow with approve / revoke / escalate actions',
+      'Immutable execution records for audit evidence',
+    ],
+    gradient: 'from-cyan-600/30 via-cyan-900/20 to-od-surface',
+    accentColor: 'text-cyan-400',
+    badge: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30',
+    label2: 'UAR',
+  },
+];
+---
+
+<section id="tour" class="py-24 relative overflow-hidden bg-od-surface/30">
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,rgba(99,102,241,0.04),transparent)]"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section header -->
+    <div class="text-center mb-12">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-sm font-medium mb-6">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polygon points="10 8 16 12 10 16 10 8"/>
+        </svg>
+        Feature Tour
+      </div>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-4">
+        See OpsDeck in action
+      </h2>
+      <p class="text-xl text-slate-400 max-w-2xl mx-auto">
+        Explore how each module helps your team stay on top of IT operations.
+      </p>
+    </div>
+
+    <!-- Tab container -->
+    <div class="bg-od-surface rounded-2xl border border-white/5 overflow-hidden shadow-2xl shadow-black/40">
+      <!-- Tab bar -->
+      <div class="flex overflow-x-auto border-b border-white/5 bg-od-bg/40" id="tour-tabs" role="tablist">
+        {tabs.map((tab, i) => (
+          <button
+            role="tab"
+            aria-selected={i === 0 ? 'true' : 'false'}
+            aria-controls={`panel-${tab.id}`}
+            id={`tab-${tab.id}`}
+            data-tab={tab.id}
+            class={`tour-tab flex-shrink-0 flex items-center gap-2 px-5 py-4 text-sm font-medium border-b-2 transition-all duration-200 whitespace-nowrap ${
+              i === 0
+                ? 'border-indigo-500 text-white bg-indigo-500/10'
+                : 'border-transparent text-slate-500 hover:text-slate-300 hover:bg-white/5'
+            }`}
+          >
+            <span set:html={tab.icon}></span>
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      <!-- Tab panels -->
+      {tabs.map((tab, i) => (
+        <div
+          id={`panel-${tab.id}`}
+          role="tabpanel"
+          aria-labelledby={`tab-${tab.id}`}
+          class={`tour-panel ${i === 0 ? '' : 'hidden'}`}
+          data-panel={tab.id}
+        >
+          <div class="grid lg:grid-cols-2 gap-0">
+            <!-- Left: text content -->
+            <div class="p-8 lg:p-10 flex flex-col justify-center">
+              <span class={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border ${tab.badge} mb-4 w-fit`}>
+                {tab.label2}
+              </span>
+              <h3 class="text-2xl font-bold text-white mb-3">{tab.title}</h3>
+              <p class="text-slate-400 mb-6 leading-relaxed">{tab.description}</p>
+              <ul class="space-y-3">
+                {tab.bullets.map((bullet) => (
+                  <li class="flex items-start gap-3">
+                    <svg class={`flex-shrink-0 mt-0.5 ${tab.accentColor}`} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    <span class="text-sm text-slate-300">{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- Right: placeholder mockup -->
+            <div class="relative min-h-[320px] lg:min-h-[440px] overflow-hidden border-t lg:border-t-0 lg:border-l border-white/5">
+              <!-- Gradient background -->
+              <div class={`absolute inset-0 bg-gradient-to-br ${tab.gradient}`}></div>
+
+              <!-- Grid pattern overlay -->
+              <div class="absolute inset-0 bg-grid-pattern opacity-40"></div>
+
+              <!-- Decorative UI elements -->
+              <div class="absolute inset-0 flex flex-col items-center justify-center p-8">
+                <!-- Fake window chrome -->
+                <div class="w-full max-w-sm bg-od-surface/80 backdrop-blur-sm rounded-xl border border-white/10 shadow-2xl overflow-hidden">
+                  <div class="flex items-center gap-1.5 px-3 py-2.5 bg-od-bg/60 border-b border-white/5">
+                    <div class="w-2.5 h-2.5 rounded-full bg-red-500/70"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/70"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-green-500/70"></div>
+                    <div class="ml-2 text-xs text-slate-500">{tab.label2} — OpsDeck</div>
+                  </div>
+                  <div class="p-4">
+                    <!-- Fake table header -->
+                    <div class="flex items-center justify-between mb-3">
+                      <div class="h-2.5 w-20 bg-white/10 rounded-full"></div>
+                      <div class="h-6 w-16 bg-indigo-500/20 border border-indigo-500/30 rounded-md"></div>
+                    </div>
+                    <!-- Fake table rows -->
+                    {[1, 2, 3, 4].map((_, ri) => (
+                      <div class={`flex items-center gap-3 py-2 ${ri < 3 ? 'border-b border-white/5' : ''}`}>
+                        <div class={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${ri === 0 ? 'bg-green-400' : ri === 1 ? 'bg-indigo-400' : ri === 2 ? 'bg-amber-400' : 'bg-violet-400'}`}></div>
+                        <div class="flex-1 space-y-1">
+                          <div class={`h-2 rounded-full bg-white/10 ${ri === 0 ? 'w-3/4' : ri === 1 ? 'w-2/3' : ri === 2 ? 'w-4/5' : 'w-1/2'}`}></div>
+                          <div class="h-1.5 w-1/3 rounded-full bg-white/5"></div>
+                        </div>
+                        <div class="h-5 w-12 bg-white/5 rounded-md"></div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <!-- Label below -->
+                <div class="mt-6 text-center">
+                  <p class={`text-xs font-medium uppercase tracking-widest ${tab.accentColor} opacity-60`}>
+                    Screenshot coming soon
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.tour-tab');
+  const panels = document.querySelectorAll<HTMLElement>('.tour-panel');
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab;
+
+      // Update tab styles
+      tabs.forEach((t) => {
+        if (t.dataset.tab === target) {
+          t.classList.remove('border-transparent', 'text-slate-500');
+          t.classList.add('border-indigo-500', 'text-white', 'bg-indigo-500/10');
+          t.setAttribute('aria-selected', 'true');
+        } else {
+          t.classList.add('border-transparent', 'text-slate-500');
+          t.classList.remove('border-indigo-500', 'text-white', 'bg-indigo-500/10');
+          t.setAttribute('aria-selected', 'false');
+        }
+      });
+
+      // Show/hide panels
+      panels.forEach((panel) => {
+        if (panel.dataset.panel === target) {
+          panel.classList.remove('hidden');
+        } else {
+          panel.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>

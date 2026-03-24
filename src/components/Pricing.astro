@@ -1,0 +1,322 @@
+---
+const enterpriseFeatures = [
+  'GitHub, Google Workspace, AWS, Atlassian, Microsoft 365, JumpCloud connectors',
+  'Automated User Access Review sync',
+  'AI-powered assistant & automation',
+  'Connector task scheduling',
+  'Automated compliance reports',
+  'Priority support with SLA',
+  'Dedicated Customer Success Manager',
+  'Custom integration development',
+];
+
+const connectors = [
+  { name: 'GitHub', color: 'text-white' },
+  { name: 'Google', color: 'text-blue-400' },
+  { name: 'AWS', color: 'text-amber-400' },
+  { name: 'Atlassian', color: 'text-blue-500' },
+  { name: 'M365', color: 'text-indigo-400' },
+  { name: 'JumpCloud', color: 'text-green-400' },
+];
+---
+
+<!-- Enterprise section -->
+<section id="enterprise" class="py-24 relative overflow-hidden">
+  <!-- Background gradient -->
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,rgba(99,102,241,0.08),transparent)]"></div>
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/30 to-transparent"></div>
+  <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <!-- Left: Feature list -->
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-violet-500/10 border border-violet-500/30 text-violet-300 text-sm font-medium mb-6">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          Enterprise Plugin
+        </div>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-4">
+          Supercharge with the
+          <span class="block mt-1 bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
+            Enterprise Plugin
+          </span>
+        </h2>
+        <p class="text-lg text-slate-400 mb-8 leading-relaxed">
+          Optional paid add-on. Install alongside your self-hosted instance and unlock connectors, AI, and premium support.
+        </p>
+
+        <ul class="space-y-4 mb-10">
+          {enterpriseFeatures.map((feature) => (
+            <li class="flex items-start gap-3">
+              <div class="flex-shrink-0 w-5 h-5 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center mt-0.5">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </div>
+              <span class="text-slate-300">{feature}</span>
+            </li>
+          ))}
+        </ul>
+
+        <a
+          href="mailto:sales@opsdeck.app"
+          class="inline-flex items-center gap-2 px-6 py-3 text-base font-semibold text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 rounded-xl transition-all duration-200 shadow-xl shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:-translate-y-0.5"
+        >
+          Contact Sales
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Right: Enterprise card -->
+      <div class="relative">
+        <!-- Glow -->
+        <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-violet-500/20 rounded-2xl blur-2xl transform scale-105"></div>
+
+        <div class="relative bg-od-surface rounded-2xl border border-indigo-500/20 overflow-hidden shadow-2xl shadow-indigo-500/10">
+          <!-- Card header -->
+          <div class="bg-gradient-to-r from-indigo-600/20 to-violet-600/20 border-b border-indigo-500/20 px-6 py-5">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-lg font-bold text-white">Enterprise Plugin</h3>
+                <p class="text-sm text-indigo-300 mt-0.5">Add-on for your OSS instance</p>
+              </div>
+              <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6">
+            <!-- Connectors section -->
+            <div class="mb-6">
+              <p class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-3">API Connectors</p>
+              <div class="grid grid-cols-3 gap-2">
+                {connectors.map((c) => (
+                  <div class="flex items-center justify-center px-3 py-2 bg-od-bg/60 rounded-lg border border-white/5 hover:border-white/10 transition-colors">
+                    <span class={`text-sm font-semibold ${c.color}`}>{c.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="border-t border-white/5 my-6"></div>
+
+            <!-- AI section -->
+            <div class="flex items-start gap-3 mb-4">
+              <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-violet-500/20 border border-violet-500/20 flex items-center justify-center">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/>
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-white">AI Agent</p>
+                <p class="text-xs text-slate-400 mt-0.5">llama-index based assistant with SQL Guard and automated task execution</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3 mb-6">
+              <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-indigo-500/20 border border-indigo-500/20 flex items-center justify-center">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                  <path d="M4.93 4.93a10 10 0 0 0 0 14.14"/>
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-white">Priority Support</p>
+                <p class="text-xs text-slate-400 mt-0.5">SLA-backed email support + dedicated Customer Success Manager</p>
+              </div>
+            </div>
+
+            <!-- Pricing note -->
+            <div class="bg-od-bg/60 rounded-xl p-4 border border-white/5">
+              <p class="text-xs text-slate-500 text-center">
+                Custom pricing based on team size and requirements.
+                <br />
+                <span class="text-indigo-300 font-medium">Contact us for a demo and quote.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing Cards -->
+<section id="pricing" class="py-24 relative overflow-hidden bg-od-surface/20">
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_50%,rgba(99,102,241,0.05),transparent)]"></div>
+
+  <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-sm font-medium mb-6">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="1" x2="12" y2="23"/>
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+        </svg>
+        Simple Pricing
+      </div>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-4">
+        Start free, scale when ready
+      </h2>
+      <p class="text-xl text-slate-400 max-w-2xl mx-auto">
+        The full platform is free forever. Pay only for the enterprise connectors, AI, and dedicated support you need.
+      </p>
+    </div>
+
+    <!-- 3 pricing cards -->
+    <div class="grid md:grid-cols-3 gap-8 items-start">
+      <!-- Community card -->
+      <div class="bg-od-surface rounded-2xl border border-white/5 p-8 flex flex-col hover:border-white/10 transition-all duration-300">
+        <div class="mb-6">
+          <h3 class="text-xl font-bold text-white mb-1">Community</h3>
+          <div class="flex items-baseline gap-1 mb-3">
+            <span class="text-4xl font-extrabold text-white">Free</span>
+            <span class="text-slate-400 text-sm">forever</span>
+          </div>
+          <p class="text-sm text-slate-400">Full platform, self-hosted, community support. Everything you need to run IT operations.</p>
+        </div>
+
+        <ul class="space-y-3 mb-8 flex-1">
+          {['Full platform access', '40+ modules included', 'SAML SSO & MFA', 'Unlimited users & assets', 'REST API', 'Community support (GitHub Issues)'].map((item) => (
+            <li class="flex items-center gap-2.5 text-sm text-slate-300">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+
+        <a
+          href="https://github.com/pixelotes/opsdeck"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="w-full flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-xl transition-all duration-200"
+        >
+          Get Started
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Enterprise Plugin card (featured) -->
+      <div class="relative bg-od-surface rounded-2xl border border-indigo-500/30 p-8 flex flex-col shadow-2xl shadow-indigo-500/10 md:-mt-4 md:mb-4 hover:border-indigo-500/50 transition-all duration-300">
+        <!-- Popular badge -->
+        <div class="absolute -top-4 left-1/2 -translate-x-1/2">
+          <span class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-500/30">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+            Most Popular
+          </span>
+        </div>
+
+        <!-- Gradient top border -->
+        <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-indigo-500 to-violet-500 rounded-t-2xl"></div>
+
+        <div class="mb-6">
+          <h3 class="text-xl font-bold text-white mb-1">Enterprise Plugin</h3>
+          <div class="flex items-baseline gap-1 mb-3">
+            <span class="text-3xl font-extrabold text-white">Custom</span>
+            <span class="text-slate-400 text-sm">pricing</span>
+          </div>
+          <p class="text-sm text-slate-400">All connectors + AI on top of your self-hosted instance. Scales with your team.</p>
+        </div>
+
+        <ul class="space-y-3 mb-8 flex-1">
+          {['Everything in Community', 'API Connectors (6 platforms)', 'AI Agent & automation', 'Automated UAR sync', 'Scheduled reports', 'Priority SLA support', 'Dedicated CSM'].map((item, i) => (
+            <li class="flex items-center gap-2.5 text-sm text-slate-300">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={i === 0 ? '#6366f1' : '#22c55e'} stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+
+        <a
+          href="mailto:sales@opsdeck.app"
+          class="w-full flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 rounded-xl transition-all duration-200 shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40"
+        >
+          Contact Sales
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Premium Support card -->
+      <div class="bg-od-surface rounded-2xl border border-white/5 p-8 flex flex-col hover:border-white/10 transition-all duration-300">
+        <div class="mb-6">
+          <h3 class="text-xl font-bold text-white mb-1">Premium Support</h3>
+          <div class="flex items-baseline gap-1 mb-3">
+            <span class="text-3xl font-extrabold text-white">Custom</span>
+            <span class="text-slate-400 text-sm">pricing</span>
+          </div>
+          <p class="text-sm text-slate-400">SLA-backed support for your OpsDeck instance. For teams that need reliable, fast responses.</p>
+        </div>
+
+        <ul class="space-y-3 mb-8 flex-1">
+          {['Everything in Community', 'Priority email support', '< 4 hour response SLA', 'Dedicated CSM', 'Onboarding assistance', 'Architecture review'].map((item) => (
+            <li class="flex items-center gap-2.5 text-sm text-slate-300">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+
+        <a
+          href="mailto:sales@opsdeck.app"
+          class="w-full flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-xl transition-all duration-200"
+        >
+          Contact Sales
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Bottom FAQ-style note -->
+    <div class="mt-16 grid sm:grid-cols-3 gap-6 text-sm text-slate-500">
+      <div class="flex items-start gap-3">
+        <svg class="flex-shrink-0 mt-0.5 text-indigo-400" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <p>The Enterprise Plugin installs <span class="text-slate-400">on top of</span> your existing open-source instance. No migration needed.</p>
+      </div>
+      <div class="flex items-start gap-3">
+        <svg class="flex-shrink-0 mt-0.5 text-indigo-400" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        <p>Cancel anytime. Your data <span class="text-slate-400">stays in your infrastructure</span> — no lock-in, ever.</p>
+      </div>
+      <div class="flex items-start gap-3">
+        <svg class="flex-shrink-0 mt-0.5 text-indigo-400" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        <p>All pricing is custom — we work with your <span class="text-slate-400">team size and compliance requirements</span> to find the right fit.</p>
+      </div>
+    </div>
+  </div>
+</section>

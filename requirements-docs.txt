@@ -1,0 +1,6 @@
+mkdocs==1.6.1
+mkdocs-material==9.6.14
+mkdocs-mermaid2-plugin==1.2.1
+mkdocs-to-pdf==0.10.1
+weasyprint==62.3
+pydyf==0.10.0

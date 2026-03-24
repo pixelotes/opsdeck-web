@@ -1,0 +1,32 @@
+/* Constrain all images to page dimensions */
+img {
+  max-width: 100% !important;
+  max-height: 680px !important;
+  height: auto !important;
+  width: auto !important;
+  object-fit: contain !important;
+}
+
+/* Mermaid diagrams: fit within a single page */
+img[src*="mermaid"] {
+  max-width: 100% !important;
+  max-height: 680px !important;
+  height: auto !important;
+  width: auto !important;
+  object-fit: contain !important;
+  display: block;
+  margin: 1em auto;
+  page-break-inside: avoid;
+}
+
+/* Prevent oversized tables from breaking layout */
+table {
+  max-width: 100%;
+  font-size: 9pt;
+}
+
+/* Code blocks should wrap */
+pre, code {
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+}

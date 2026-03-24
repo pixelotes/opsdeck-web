@@ -1,0 +1,14 @@
+{
+  "flowchart": {
+    "htmlLabels": false
+  },
+  "sequence": {
+    "useMaxWidth": true
+  },
+  "er": {
+    "useMaxWidth": true
+  },
+  "gantt": {
+    "useMaxWidth": true
+  }
+}

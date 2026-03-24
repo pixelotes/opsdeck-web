@@ -1,0 +1,204 @@
+---
+const base = import.meta.env.BASE_URL;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Reference — OpsDeck</title>
+    <meta name="description" content="OpsDeck REST API reference — OpenAPI 3.0 specification with interactive Swagger UI." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css" />
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { background: #030712; font-family: 'Inter', sans-serif; color: #f1f5f9; min-height: 100vh; }
+
+      /* Top bar */
+      .topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 40; height: 56px;
+        border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(3,7,18,0.9);
+        backdrop-filter: blur(20px); display: flex; align-items: center; padding: 0 24px; gap: 12px; }
+      .topbar-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+      .topbar-logo-icon { width: 28px; height: 28px; border-radius: 6px;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6); display: flex; align-items: center; justify-content: center; }
+      .topbar-logo-text { font-size: 14px; font-weight: 600; color: white; }
+      .topbar-sep { color: rgba(255,255,255,0.2); }
+      .topbar-title { font-size: 14px; color: #94a3b8; }
+      .topbar-links { margin-left: auto; display: flex; align-items: center; gap: 16px; }
+      .topbar-link { font-size: 13px; color: #94a3b8; text-decoration: none; transition: color 0.15s; }
+      .topbar-link:hover { color: white; }
+
+      /* Notice banner */
+      .notice { margin: 80px 24px 0; padding: 16px 20px; border-radius: 12px;
+        border: 1px solid rgba(99,102,241,0.3); background: rgba(99,102,241,0.05);
+        display: flex; align-items: flex-start; gap: 12px; max-width: 900px; }
+      .notice-icon { color: #818cf8; margin-top: 1px; shrink: 0; }
+      .notice-text { font-size: 13px; color: #94a3b8; line-height: 1.6; }
+      .notice-text strong { color: #c7d2fe; font-weight: 500; }
+      .notice-text code { background: rgba(99,102,241,0.15); padding: 1px 6px; border-radius: 4px;
+        font-family: 'Fira Code', 'Cascadia Code', monospace; font-size: 12px; color: #a5b4fc; }
+
+      /* Instance input */
+      .instance-bar { margin: 12px 24px 0; max-width: 900px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+      .instance-label { font-size: 13px; color: #64748b; white-space: nowrap; }
+      .instance-input { flex: 1; min-width: 200px; background: #0f172a; border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 8px; padding: 8px 12px; font-size: 13px; color: #f1f5f9; outline: none; font-family: monospace; }
+      .instance-input:focus { border-color: #6366f1; }
+      .instance-input::placeholder { color: #475569; }
+      .instance-btn { padding: 8px 16px; background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        border: none; border-radius: 8px; font-size: 13px; font-weight: 500; color: white; cursor: pointer;
+        white-space: nowrap; transition: opacity 0.15s; }
+      .instance-btn:hover { opacity: 0.85; }
+
+      /* Swagger UI container */
+      #swagger-ui-container { padding: 24px; padding-top: 16px; }
+
+      /* Swagger UI overrides for dark theme */
+      .swagger-ui { font-family: 'Inter', sans-serif !important; }
+      .swagger-ui .topbar { display: none !important; }
+      .swagger-ui .info { margin: 20px 0 !important; }
+      .swagger-ui .info .title { color: #f1f5f9 !important; font-size: 24px !important; font-weight: 700 !important; }
+      .swagger-ui .info p, .swagger-ui .info li { color: #94a3b8 !important; }
+      .swagger-ui .info .description p { color: #94a3b8 !important; }
+      .swagger-ui .scheme-container { background: #0f172a !important; border: 1px solid rgba(255,255,255,0.08) !important; border-radius: 12px !important; padding: 16px !important; }
+      .swagger-ui select { background: #1e293b !important; color: #f1f5f9 !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 6px !important; }
+      .swagger-ui .opblock { border-radius: 10px !important; border: 1px solid rgba(255,255,255,0.08) !important; margin-bottom: 8px !important; background: #0f172a !important; }
+      .swagger-ui .opblock .opblock-summary { border-radius: 10px !important; }
+      .swagger-ui .opblock.opblock-get .opblock-summary { border-color: rgba(59,130,246,0.3) !important; background: rgba(59,130,246,0.05) !important; }
+      .swagger-ui .opblock.opblock-post .opblock-summary { border-color: rgba(16,185,129,0.3) !important; background: rgba(16,185,129,0.05) !important; }
+      .swagger-ui .opblock.opblock-put .opblock-summary { border-color: rgba(245,158,11,0.3) !important; background: rgba(245,158,11,0.05) !important; }
+      .swagger-ui .opblock.opblock-delete .opblock-summary { border-color: rgba(239,68,68,0.3) !important; background: rgba(239,68,68,0.05) !important; }
+      .swagger-ui .opblock-summary-description { color: #94a3b8 !important; }
+      .swagger-ui .opblock-tag { color: #f1f5f9 !important; border-bottom: 1px solid rgba(255,255,255,0.08) !important; font-size: 18px !important; font-weight: 600 !important; }
+      .swagger-ui .opblock-tag:hover { background: rgba(255,255,255,0.02) !important; }
+      .swagger-ui .model-title { color: #c7d2fe !important; }
+      .swagger-ui .model { color: #94a3b8 !important; }
+      .swagger-ui table thead tr th { color: #94a3b8 !important; border-bottom: 1px solid rgba(255,255,255,0.08) !important; }
+      .swagger-ui .parameter__name { color: #c7d2fe !important; }
+      .swagger-ui .parameter__type { color: #a5b4fc !important; }
+      .swagger-ui input[type=text], .swagger-ui textarea { background: #1e293b !important; color: #f1f5f9 !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 6px !important; }
+      .swagger-ui .btn { border-radius: 8px !important; font-weight: 500 !important; }
+      .swagger-ui .btn.execute { background: linear-gradient(135deg, #6366f1, #8b5cf6) !important; border: none !important; }
+      .swagger-ui .responses-inner h4, .swagger-ui .responses-inner h5 { color: #c7d2fe !important; }
+      .swagger-ui .response-col_status { color: #f1f5f9 !important; }
+      .swagger-ui .highlight-code { background: #0f172a !important; border-radius: 8px !important; }
+      .swagger-ui section.models { border: 1px solid rgba(255,255,255,0.08) !important; border-radius: 12px !important; }
+      .swagger-ui section.models h4 { color: #f1f5f9 !important; }
+      .swagger-ui .opblock-body pre.microlight { background: #0f172a !important; color: #94a3b8 !important; border-radius: 8px !important; }
+      .swagger-ui .loading-container { background: transparent !important; }
+      .swagger-ui .loading-container .loading:after { background: #6366f1 !important; }
+      body .swagger-ui { background: transparent !important; }
+      .swagger-ui .wrapper { padding: 0 !important; }
+      .swagger-ui .no-margin { padding: 0 !important; }
+      .swagger-ui .opblock-section-header { background: rgba(255,255,255,0.02) !important; }
+      .swagger-ui .opblock-section-header h4 { color: #94a3b8 !important; }
+      .swagger-ui .tab li { color: #94a3b8 !important; }
+      .swagger-ui .tab li.active { color: #818cf8 !important; }
+    </style>
+  </head>
+  <body>
+    <!-- Top bar -->
+    <header class="topbar">
+      <a href={base} class="topbar-logo">
+        <div class="topbar-logo-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
+        </div>
+        <span class="topbar-logo-text">OpsDeck</span>
+      </a>
+      <span class="topbar-sep">/</span>
+      <span class="topbar-title">API Reference</span>
+      <div class="topbar-links">
+        <a href={`${base}/docs/`} class="topbar-link">Documentation</a>
+        <a href="https://github.com/pixelotes/opsdeck" target="_blank" rel="noopener noreferrer" class="topbar-link">GitHub</a>
+      </div>
+    </header>
+
+    <!-- Notice -->
+    <div class="notice" id="setup-notice">
+      <svg class="notice-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0">
+        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <div class="notice-text">
+        <strong>To load the live spec from your instance,</strong> enter your OpsDeck URL below. Or generate a static spec file with
+        <code>flask export-api-spec --output web/public/openapi.json</code> and commit it to your repo.
+      </div>
+    </div>
+
+    <!-- Instance URL input -->
+    <div class="instance-bar">
+      <span class="instance-label">Load spec from instance:</span>
+      <input
+        type="text"
+        id="instance-url"
+        class="instance-input"
+        placeholder="https://your-opsdeck.example.com"
+        value=""
+      />
+      <button class="instance-btn" id="load-btn">Load</button>
+    </div>
+
+    <!-- Swagger UI -->
+    <div id="swagger-ui-container">
+      <div id="swagger-ui"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+    <script>
+      let ui;
+
+      function initSwagger(specUrl) {
+        if (ui) {
+          document.getElementById('swagger-ui').innerHTML = '';
+        }
+        ui = SwaggerUIBundle({
+          url: specUrl,
+          dom_id: '#swagger-ui',
+          presets: [SwaggerUIBundle.presets.apis, SwaggerUIBundle.SwaggerUIStandalonePreset],
+          layout: 'BaseLayout',
+          deepLinking: true,
+          displayRequestDuration: true,
+          filter: true,
+          tryItOutEnabled: false,
+          onComplete: () => {
+            // If loaded successfully, hide the notice
+            document.getElementById('setup-notice').style.display = 'none';
+          },
+        });
+      }
+
+      // Try loading /openapi.json first (static, pre-generated)
+      fetch('/openapi.json')
+        .then(res => {
+          if (!res.ok) throw new Error('Not found');
+          return res.json();
+        })
+        .then(() => {
+          initSwagger('/openapi.json');
+          document.getElementById('setup-notice').style.display = 'none';
+        })
+        .catch(() => {
+          // Show notice — static file not found, user needs to configure
+          console.info('No static openapi.json found. Enter your instance URL to load the spec.');
+        });
+
+      // Load from instance button
+      document.getElementById('load-btn').addEventListener('click', () => {
+        const base = document.getElementById('instance-url').value.trim().replace(/\/$/, '');
+        if (!base) return;
+        const specUrl = `${base}/openapi.json`;
+        initSwagger(specUrl);
+      });
+
+      // Allow pressing Enter in the input
+      document.getElementById('instance-url').addEventListener('keydown', e => {
+        if (e.key === 'Enter') document.getElementById('load-btn').click();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,158 @@
+---
+const features = [
+  {
+    color: 'indigo',
+    bgColor: 'bg-indigo-500/10',
+    borderColor: 'border-indigo-500/20',
+    textColor: 'text-indigo-400',
+    title: 'Asset & Inventory',
+    description: 'Track assets, peripherals, software, and licenses with full lifecycle history. Assign, maintain, and dispose with audit trails.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+      <line x1="8" y1="21" x2="16" y2="21"/>
+      <line x1="12" y1="17" x2="12" y2="21"/>
+    </svg>`,
+    tags: ['Assets', 'Peripherals', 'Licenses', 'Software'],
+  },
+  {
+    color: 'violet',
+    bgColor: 'bg-violet-500/10',
+    borderColor: 'border-violet-500/20',
+    textColor: 'text-violet-400',
+    title: 'Compliance & Audit',
+    description: 'Map controls to SOC 2, ISO 27001 and more. Generate audit-ready snapshots and track your Statement of Applicability.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    </svg>`,
+    tags: ['SOC 2', 'ISO 27001', 'SOA', 'Audits'],
+  },
+  {
+    color: 'rose',
+    bgColor: 'bg-rose-500/10',
+    borderColor: 'border-rose-500/20',
+    textColor: 'text-rose-400',
+    title: 'Risk Management',
+    description: 'Maintain a living risk register. Link risks to assets, services, and vendors. Track incidents and security assessments.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+      <line x1="12" y1="9" x2="12" y2="13"/>
+      <line x1="12" y1="17" x2="12.01" y2="17"/>
+    </svg>`,
+    tags: ['Risk Register', 'Incidents', 'Assessments'],
+  },
+  {
+    color: 'cyan',
+    bgColor: 'bg-cyan-500/10',
+    borderColor: 'border-cyan-500/20',
+    textColor: 'text-cyan-400',
+    title: 'User Access Review',
+    description: 'Automate UAR processes. Compare access lists, surface findings, and create immutable execution records.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+    </svg>`,
+    tags: ['UAR', 'Access Review', 'Findings'],
+  },
+  {
+    color: 'amber',
+    bgColor: 'bg-amber-500/10',
+    borderColor: 'border-amber-500/20',
+    textColor: 'text-amber-400',
+    title: 'Vendor & Procurement',
+    description: 'Manage suppliers, contracts, subscriptions, and budgets. Track renewals and vendor compliance status.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <path d="M16 10a4 4 0 0 1-8 0"/>
+    </svg>`,
+    tags: ['Suppliers', 'Contracts', 'Budgets', 'Subscriptions'],
+  },
+  {
+    color: 'emerald',
+    bgColor: 'bg-emerald-500/10',
+    borderColor: 'border-emerald-500/20',
+    textColor: 'text-emerald-400',
+    title: 'Service Mapping',
+    description: 'Build dependency graphs for business services. Map services to assets and track SLAs.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="18" cy="5" r="3"/>
+      <circle cx="6" cy="12" r="3"/>
+      <circle cx="18" cy="19" r="3"/>
+      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+      <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+    </svg>`,
+    tags: ['Services', 'Dependencies', 'SLA Tracking'],
+  },
+];
+---
+
+<section id="features" class="py-24 relative overflow-hidden">
+  <!-- Subtle background -->
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_100%,rgba(99,102,241,0.06),transparent)]"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section header -->
+    <div class="text-center mb-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-sm font-medium mb-6">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7" rx="1"/>
+          <rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/>
+          <rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+        Core Modules
+      </div>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-4">
+        Everything your IT department needs
+      </h2>
+      <p class="text-xl text-slate-400 max-w-2xl mx-auto">
+        40+ modules covering the full operational lifecycle —
+        <span class="text-indigo-300 font-medium">all open source, all included.</span>
+      </p>
+    </div>
+
+    <!-- Feature grid -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {features.map((f) => (
+        <div class={`group relative bg-od-surface rounded-2xl p-6 border border-white/5 hover:border-white/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/20`}>
+          <!-- Hover gradient overlay -->
+          <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+          <!-- Icon -->
+          <div class={`relative inline-flex items-center justify-center w-12 h-12 rounded-xl ${f.bgColor} border ${f.borderColor} ${f.textColor} mb-4`} set:html={f.icon}>
+          </div>
+
+          <!-- Content -->
+          <h3 class="text-lg font-semibold text-white mb-2">{f.title}</h3>
+          <p class="text-sm text-slate-400 leading-relaxed mb-4">{f.description}</p>
+
+          <!-- Tags -->
+          <div class="flex flex-wrap gap-1.5">
+            {f.tags.map((tag) => (
+              <span class={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium ${f.bgColor} ${f.textColor} border ${f.borderColor}`}>
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Additional modules callout -->
+    <div class="mt-12 text-center">
+      <div class="inline-flex flex-wrap items-center justify-center gap-3 text-sm text-slate-500">
+        <span>Also includes:</span>
+        {['Credentials Vault', 'Certificate Tracking', 'Policy & Training', 'HR Onboarding/Offboarding', 'ATS', 'REST API', 'SAML SSO', 'MFA', 'RBAC', 'Audit Log', 'Notifications'].map((m) => (
+          <span class="inline-flex items-center gap-1 text-slate-400">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="3">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            {m}
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

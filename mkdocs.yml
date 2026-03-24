@@ -1,0 +1,154 @@
+site_name: OpsDeck Documentation
+site_description: IT Operations & Governance Platform — User Guide, Deployment, and Architecture Reference
+site_author: pixelotes
+site_url: https://pixelotes.github.io/OpsDeck/docs/
+use_directory_urls: true
+repo_url: https://github.com/pixelotes/opsdeck
+repo_name: pixelotes/opsdeck
+edit_uri: ""
+docs_dir: docs-content
+site_dir: dist/docs
+
+copyright: Copyright &copy; 2024–2026 pixelotes — Elastic License
+
+theme:
+  name: material
+  language: en
+  logo: assets/images/logo.png
+  favicon: assets/images/favicon.png
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: teal
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: teal
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+    - toc.follow
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search
+  - mermaid2
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid_custom
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.mark
+  - pymdownx.keys
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/pixelotes/opsdeck
+
+nav:
+  - Home: index.md
+
+  - User Guide:
+      - user-guide/index.md
+      - Getting Started: user-guide/getting-started.md
+      - Dashboard: user-guide/dashboard.md
+      - Assets:
+          - Hardware Assets: user-guide/assets.md
+          - Peripherals: user-guide/peripherals.md
+          - Software Inventory: user-guide/software.md
+          - Locations: user-guide/locations.md
+          - Maintenance: user-guide/maintenance.md
+          - Disposal: user-guide/disposal.md
+      - Compliance & Audits:
+          - Frameworks & Controls: user-guide/frameworks.md
+          - Compliance Dashboard: user-guide/compliance.md
+          - Audit Snapshots: user-guide/audits.md
+          - Compliance Drift: user-guide/compliance-drift.md
+      - User Access Reviews: user-guide/uar.md
+      - Risk Management:
+          - Risk Register: user-guide/risk.md
+          - Risk Assessment: user-guide/risk-assessment.md
+          - Security Incidents: user-guide/incidents.md
+      - Vendors & Procurement:
+          - Suppliers: user-guide/suppliers.md
+          - Contracts: user-guide/contracts.md
+          - Subscriptions: user-guide/subscriptions.md
+          - Purchases & Budgets: user-guide/purchases.md
+      - Service Catalog: user-guide/services.md
+      - People:
+          - Users & Groups: user-guide/users.md
+          - Onboarding & Offboarding: user-guide/onboarding.md
+          - Hiring Pipeline: user-guide/hiring.md
+      - Policies & Training:
+          - Policy Management: user-guide/policies.md
+          - Training Courses: user-guide/training.md
+      - Credentials Vault: user-guide/credentials.md
+      - Certificates: user-guide/certificates.md
+      - Change Management: user-guide/changes.md
+      - BCDR: user-guide/bcdr.md
+      - CRM:
+          - Contacts & Leads: user-guide/crm.md
+          - Opportunities: user-guide/opportunities.md
+          - Campaigns: user-guide/campaigns.md
+      - Reports & Search: user-guide/reports.md
+      - Configuration: user-guide/configuration.md
+      - Data Import (CLI): user-guide/data-import.md
+      - API Usage: user-guide/api.md
+
+  - Deployment:
+      - deployment/index.md
+      - Quick Start: deployment/quickstart.md
+      - Docker Compose: deployment/docker.md
+      - Kubernetes (Helm): deployment/kubernetes.md
+      - Manual Deployment: deployment/manual.md
+      - Environment Variables: deployment/environment-variables.md
+      - Database Management: deployment/database.md
+      - Backup & Restore: deployment/backup-restore.md
+      - Upgrading: deployment/upgrading.md
+      - Monitoring & Logging: deployment/monitoring.md
+      - Security Hardening: deployment/security-hardening.md
+
+  - Architecture:
+      - architecture/index.md
+      - System Overview: architecture/overview.md
+      - Data Model: architecture/data-model.md
+      - Permissions & RBAC: architecture/permissions.md
+      - Decision Records (ADRs): architecture/decisions.md
+      - Dependencies: architecture/dependencies.md
+      - Frontend Stack: architecture/frontend.md
+      - API Design: architecture/api-design.md
+      - Scheduler & Jobs: architecture/scheduler.md
+      - Security Model: architecture/security-model.md
+
+  - FAQ: faq.md
+  - Changelog: changelog.md
