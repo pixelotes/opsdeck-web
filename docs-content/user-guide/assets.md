@@ -26,6 +26,8 @@ stateDiagram-v2
 
 ## Creating an asset
 
+<!-- TODO: screenshot of the asset creation form -->
+
 1. Navigate to **Assets → Asset List**.
 2. Click **Add Asset**.
 3. Fill in the required fields: name, asset type, model, serial number.
@@ -37,6 +39,8 @@ stateDiagram-v2
 The asset is created in **In Stock** status by default unless assigned to a user.
 
 ## Assignment and transfers
+
+<!-- TODO: screenshot of an asset detail page showing assignment history -->
 
 Assigning an asset to a user:
 

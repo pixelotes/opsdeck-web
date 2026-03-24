@@ -24,6 +24,8 @@ flowchart LR
 
 ## Configuring a comparison
 
+<!-- TODO: screenshot of the UAR comparison configuration form -->
+
 1. Navigate to **Compliance → User Access Reviews**.
 2. Click **Create Comparison**.
 3. Configure:
@@ -46,6 +48,8 @@ Comparisons can be scheduled to run automatically:
 Each execution creates a `UARExecution` record with its own set of findings.
 
 ## Reviewing findings
+
+<!-- TODO: screenshot of the findings list with the side-by-side diff viewer for a mismatch -->
 
 1. Navigate to the execution detail page.
 2. Findings are listed by severity with counts per type.

@@ -4,7 +4,7 @@ Get a local development instance running in under 5 minutes.
 
 ## Prerequisites
 
-- Python 3.11+
+- Python 3.11+ (3.13 recommended)
 - PostgreSQL 15+ running locally (or use the Docker Compose method below)
 - Git
 

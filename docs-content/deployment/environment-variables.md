@@ -34,12 +34,6 @@ These are used only on the first run to create the initial admin user.
 | `EMAIL_USERNAME` | SMTP authentication username (usually an email). | `''` |
 | `EMAIL_PASSWORD` | SMTP authentication password or app password. | `''` |
 
-## Notifications
-
-| Variable | Description | Default |
-|---|---|---|
-| `WEBHOOK_URL` | External webhook URL for notifications (Slack, Discord). | `''` |
-
 ## Authentication
 
 | Variable | Description | Default |
@@ -47,7 +41,7 @@ These are used only on the first run to create the initial admin user.
 | `GOOGLE_OAUTH_CLIENT_ID` | Google OAuth client ID for SSO. | `''` |
 | `GOOGLE_OAUTH_CLIENT_SECRET` | Google OAuth client secret. | `''` |
 | `OAUTHLIB_INSECURE_TRANSPORT` | Allow OAuth over HTTP. **Development only.** | — |
-| `MFA_ENABLED` | Enable TOTP multi-factor authentication. | `False` |
+| `MFA_ENABLED` | Enable IP-based MFA. When a login comes from an unknown IP, an OTP is sent via email. Known IPs (tracked per user) bypass the check. | `False` |
 
 ## Session and cookies
 
@@ -56,6 +50,21 @@ These are used only on the first run to create the initial admin user.
 | `SESSION_COOKIE_SECURE` | `False` | `True` |
 | `SESSION_COOKIE_HTTPONLY` | `True` | `True` |
 | `SESSION_COOKIE_SAMESITE` | `Lax` | `Lax` or `Strict` |
+
+## Notifications
+
+| Variable | Description | Default |
+|---|---|---|
+| `WEBHOOK_URL` | External webhook URL for notifications (Slack, Discord). | `''` |
+| `SLACK_BOT_TOKEN` | Slack bot token for direct messaging and channel notifications. | `''` |
+
+## Performance tuning
+
+| Variable | Description | Default |
+|---|---|---|
+| `GUNICORN_WORKERS` | Number of Gunicorn worker processes. | `2` |
+| `GUNICORN_THREADS` | Threads per Gunicorn worker. | `4` |
+| `TIMEZONE` | Application timezone for scheduled jobs and display. | `Europe/Madrid` |
 
 ## Enterprise features
 

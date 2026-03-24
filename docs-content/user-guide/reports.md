@@ -1,5 +1,7 @@
 # Reports & Search
 
+<!-- TODO: screenshot of a generated report (e.g., compliance summary or asset inventory) -->
+
 OpsDeck includes built-in reports and a universal search engine for cross-entity discovery.
 
 ## Built-in reports

@@ -4,6 +4,8 @@ The compliance dashboard provides a real-time view of your organization's compli
 
 ## Compliance score
 
+<!-- TODO: screenshot of the compliance dashboard showing score and control status breakdown -->
+
 The dashboard displays an overall compliance score per framework, calculated as the percentage of controls that have at least one evidence link (compliance link) attached. Controls are categorized by status:
 
 | Status | Meaning |

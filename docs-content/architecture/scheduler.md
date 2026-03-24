@@ -15,10 +15,13 @@ Jobs are defined programmatically in the application factory (`src/__init__.py`)
 
 | Job | Schedule | Service | Description |
 |---|---|---|---|
-| Compliance drift snapshot | Daily | `compliance_drift_service` | Captures current compliance status for all frameworks and compares with the previous snapshot to detect regressions |
+| Compliance drift snapshot | Weekly (Mondays at 9:00 AM) | `compliance_drift_service` | Captures current compliance status for all frameworks and compares with the previous snapshot to detect regressions |
 | UAR scheduled execution | Configurable per comparison | `uar_service` | Loads datasets, runs the comparison engine, and generates findings |
 | Subscription renewal alerts | Daily | `notifications` | Checks for subscriptions approaching renewal and sends notifications |
+| Credential expiry alerts | Daily | `notifications` | Checks for credentials approaching expiry date |
 | Certificate expiry alerts | Daily | `notifications` | Checks for certificates approaching expiry date |
+| Communications queue | Every 5 minutes | `notifications` | Processes scheduled emails, Slack messages, and webhooks |
+| Exchange rate sync | Daily at 3:00 AM | `finance_service` | Syncs currency exchange rates for multi-currency support |
 | Data retention | Weekly | — | Archives old records per configured retention policies |
 
 ## Compliance drift detection

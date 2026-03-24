@@ -9,7 +9,15 @@ Production-grade deployment using Docker Compose with PostgreSQL, persistent sto
 
 ## docker-compose.yml
 
-The repository includes a `docker-compose.yml` configured for development. For production, use the following as a starting point:
+The repository includes a `docker-compose.yml` configured for development (debug mode, demo data, no healthcheck on the web service). For production, use the following as a starting point:
+
+```mermaid
+graph LR
+    Client[Browser] --> Nginx[Nginx / Traefik<br/>TLS termination]
+    Nginx --> Web[OpsDeck<br/>Gunicorn :5000]
+    Web --> DB[(PostgreSQL 16)]
+    Web --> FS[Attachments<br/>volume]
+```
 
 ```yaml
 services:
@@ -82,9 +90,14 @@ docker-compose up -d --build
 
 The `entrypoint.sh` script handles first-run initialization automatically:
 
-1. Runs `flask db upgrade` to apply database migrations.
-2. Runs `flask init-db` to create base tables and the admin user.
-3. Starts Gunicorn with the configured number of workers.
+1. Installs the enterprise plugin if `ENTERPRISE_ENABLED=True` and the plugin directory exists.
+2. Detects and recovers stale Alembic revisions (e.g., after a migration squash).
+3. Runs `flask db upgrade` to apply database migrations.
+4. Runs `flask init-db` to create the admin user.
+5. Runs `flask seed-db-prod` to load compliance frameworks and threat catalogs.
+6. Runs `flask seed-db-demodata` if `SEED_DEMO_DATA=True` (development only).
+7. Seeds enterprise data (`flask seed-connectors`, `flask seed-ai-profiles`) if enterprise is enabled.
+8. Starts Gunicorn with the configured workers and threads.
 
 Verify the deployment:
 
@@ -154,7 +167,12 @@ services:
 
 ## Performance tuning
 
-**Gunicorn workers.** The default formula is `(2 × CPU cores) + 1`. Set via the `WEB_CONCURRENCY` environment variable or by modifying `entrypoint.sh`.
+**Gunicorn workers and threads.** Configured via environment variables:
+
+- `GUNICORN_WORKERS` — number of worker processes (default: `2`).
+- `GUNICORN_THREADS` — threads per worker (default: `4`).
+
+The entrypoint uses the `gthread` worker class with `--max-requests 1000` and `--max-requests-jitter 50` to periodically recycle workers and prevent memory leaks.
 
 **Database connection pool.** Configure in `.env` or application config:
 

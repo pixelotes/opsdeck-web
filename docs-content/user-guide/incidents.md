@@ -1,5 +1,7 @@
 # Security Incidents
 
+<!-- TODO: screenshot of an incident detail page with timeline events -->
+
 The incident management module tracks security events from initial report through investigation, resolution, and post-incident review.
 
 ## Reporting an incident

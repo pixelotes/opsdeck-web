@@ -1,5 +1,7 @@
 # Onboarding & Offboarding
 
+<!-- TODO: screenshot of an onboarding checklist in progress -->
+
 Manage employee onboarding and offboarding with templated checklists, pack communications, and progress tracking.
 
 ## Onboarding packs

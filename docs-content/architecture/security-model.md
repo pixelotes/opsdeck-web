@@ -10,9 +10,9 @@ OpsDeck supports two authentication methods: local credentials and Google OAuth 
 
 1. User submits email and password.
 2. Password is verified against the stored hash (Werkzeug PBKDF2).
-3. If MFA is enabled (`MFA_ENABLED=True`), a TOTP token is required.
+3. If MFA is enabled (`MFA_ENABLED=True`) and the login comes from an unknown IP address, a one-time password (OTP) is sent via email. Known IPs are tracked per user via the `UserKnownIP` model and bypass the MFA step.
 4. Flask-Login creates a server-side session with secure cookie flags.
-5. The user's known IP is recorded (`UserKnownIP` model) for anomaly detection.
+5. The user's IP is recorded as a known IP for future logins.
 
 ### OAuth (Google SSO)
 
@@ -40,14 +40,14 @@ Sessions are stored server-side. The cookie contains only the session identifier
 
 | Role | Access |
 |---|---|
-| **Admin** | Full system access, user management, configuration |
-| **Manager** | Read/write to operational data, limited admin functions |
-| **User** | Read access to assigned data, limited write access |
+| **Admin** | Full system access, user management, configuration. Bypasses all permission checks. |
+| **Editor** | Read/write access to operational data based on module permissions |
+| **User** | Read access to assigned data, limited write access based on module permissions |
 | **API** | Programmatic access via bearer token (inherits user's permissions) |
 
 ### Permission resolution
 
-Permissions are defined at the module level. Each module (assets, compliance, risk, etc.) has three permission levels: `can_read`, `can_write`, `can_delete`.
+Permissions are defined at the module level. Each module (assets, compliance, risk, etc.) has two access levels: `READ_ONLY` and `WRITE` (which implies read).
 
 Permission checks follow this chain:
 

@@ -1,5 +1,7 @@
 # Dashboard
 
+<!-- TODO: screenshot of the main dashboard with widgets and charts -->
+
 The dashboard is your landing page after login, providing an at-a-glance overview of operational and compliance status.
 
 ## Dashboard widgets

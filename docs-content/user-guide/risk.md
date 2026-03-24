@@ -16,6 +16,8 @@ The risk register tracks identified threats to your organization, their scoring,
 
 ## Risk scoring
 
+<!-- TODO: screenshot of the risk heat map (impact vs. likelihood matrix) -->
+
 Each risk is scored on two axes:
 
 | Dimension | Scale | Description |

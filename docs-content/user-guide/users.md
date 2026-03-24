@@ -16,9 +16,9 @@ Manage user accounts, group memberships, role assignments, and the organization 
 
 | Role | Description |
 |---|---|
-| **Admin** | Full system access including user management and configuration |
-| **Manager** | Read/write access to operational data, limited admin capabilities |
-| **User** | Read access to assigned data with limited write permissions |
+| **Admin** | Full system access including user management and configuration. Bypasses all permission checks. |
+| **Editor** | Read/write access to operational data based on module permissions |
+| **User** | Read access to assigned data with limited write permissions based on module permissions |
 
 ### Custom properties
 
@@ -44,5 +44,7 @@ OpsDeck includes an interactive org chart:
 - `OrgChartSnapshot` records capture point-in-time snapshots of the organizational structure.
 
 ## Permission assignment
+
+<!-- TODO: screenshot of the module permission assignment panel for a user or group -->
 
 See [Permissions & RBAC](../architecture/permissions.md) for the technical details of how permissions are resolved and cached.

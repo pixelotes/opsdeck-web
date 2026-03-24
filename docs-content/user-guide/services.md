@@ -23,6 +23,8 @@ Components are the technical building blocks that support a business service:
 
 ## Dependency mapping
 
+<!-- TODO: screenshot of the service dependency topology graph -->
+
 The topology view shows the complete dependency graph for a service:
 
 ```mermaid

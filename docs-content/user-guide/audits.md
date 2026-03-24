@@ -23,6 +23,8 @@ Renewal mode clones the previous audit's control items and evidence links, givin
 
 ## Working with the audit
 
+<!-- TODO: screenshot of an audit snapshot showing controls with evidence and status badges -->
+
 Once created, the audit provides:
 
 - **Control list** — all controls in scope, grouped by framework section, with status badges.

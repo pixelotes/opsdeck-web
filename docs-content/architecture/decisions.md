@@ -104,6 +104,9 @@ This page documents the key architectural decisions made during OpsDeck's develo
 
 **Trade-offs.** Limits deployment options for organizations that standardize on MySQL/MariaDB. The psycopg2-binary dependency requires PostgreSQL client libraries.
 
+!!! note "Historical note: SQLite support (removed in v0.6)"
+    OpsDeck supported SQLite as an alternative database through version 0.5. It was dropped in v0.6 because the workarounds required to accommodate SQLite's limitations (no native JSON operators, no concurrent writes, limited ALTER TABLE support, missing window functions) were adding complexity and slowing down development. Features like audit logging with JSON diffs, compliance drift snapshots, and full-text search all relied on PostgreSQL capabilities that had no clean SQLite equivalent.
+
 ---
 
 ## ADR-007: Sequential migration numbering
@@ -169,3 +172,21 @@ This page documents the key architectural decisions made during OpsDeck's develo
 - Mature library with good edge-case handling (type changes, list reordering, etc.).
 
 **Trade-offs.** Can be slow on very large objects. Output format requires post-processing for human display. Library size is non-trivial for what is conceptually a simple operation.
+
+---
+
+## ADR-011: ECS-format structured logging
+
+**Context.** OpsDeck targets regulated environments where centralized log management is expected. Logs need to be machine-parseable for aggregation in ELK, Datadog, Splunk, or similar stacks.
+
+**Decision.** Use the `ecs-logging` library to emit logs in Elastic Common Schema (ECS) format.
+
+**Rationale.**
+
+- ECS is a well-defined, vendor-neutral JSON schema for log events — fields like `@timestamp`, `log.level`, `message`, `error.stack_trace` are standardized.
+- Elasticsearch/Kibana ingest ECS logs natively with zero custom parsers or grok patterns. This is a significant operational win for teams already running ELK.
+- Other log aggregators (Datadog, Splunk, Grafana Loki) can consume JSON logs with minimal configuration since the field names are predictable.
+- The Helm chart includes an optional Filebeat sidecar that ships ECS logs directly to Elasticsearch.
+- Structured JSON is also easier to filter programmatically than plain-text logs (e.g., `jq '.log.level == "ERROR"'`).
+
+**Trade-offs.** JSON logs are harder to read in a terminal during local development compared to plain-text. The `ecs-logging` library adds a dependency. Teams not using ELK get less immediate value from the specific field naming, though the structured JSON format is still beneficial.

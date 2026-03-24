@@ -51,6 +51,8 @@ This provides:
 
 ## OpenAPI spec
 
+<!-- TODO: screenshot of the Swagger UI interface -->
+
 flask-smorest auto-generates an OpenAPI 3.0 spec from the registered blueprints and schemas. Available at:
 
 - `/openapi.json` — raw spec.

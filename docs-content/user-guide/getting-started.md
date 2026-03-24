@@ -4,6 +4,8 @@ This guide walks you through your first steps after deploying OpsDeck — from l
 
 ## First login
 
+<!-- TODO: screenshot of the login page -->
+
 After deployment, open your OpsDeck instance and log in with the admin credentials configured during installation:
 
 - **Default email:** `admin@example.com`
@@ -12,6 +14,8 @@ After deployment, open your OpsDeck instance and log in with the admin credentia
 You'll be prompted to change the default password immediately. If Google OAuth is configured, you can also use "Sign in with Google."
 
 ## Navigation overview
+
+<!-- TODO: screenshot of the main dashboard with sidebar navigation -->
 
 OpsDeck's interface is organized around a left sidebar with these main sections:
 
@@ -72,7 +76,7 @@ Navigate to **Administration → Cost Centers** and create departments or budget
 
 Navigate to **People → Users** and create your team:
 
-1. Click "Add User" — provide name, email, and role (Admin/Manager/User).
+1. Click "Add User" — provide name, email, and role (Admin/Editor/User).
 2. Create **Groups** for department-based permission assignment.
 3. If using Google OAuth, users can log in immediately with their Google email.
 

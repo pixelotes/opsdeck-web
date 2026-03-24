@@ -4,7 +4,7 @@ Compliance drift detection monitors your compliance posture over time and alerts
 
 ## How drift detection works
 
-OpsDeck takes daily automated snapshots of compliance status across all frameworks. Each snapshot captures the status of every control at that point in time. The system then compares consecutive snapshots to detect changes.
+OpsDeck takes weekly automated snapshots of compliance status across all frameworks (every Monday at 9:00 AM local time). Each snapshot captures the status of every control at that point in time. The system then compares consecutive snapshots to detect changes.
 
 ```mermaid
 flowchart LR
@@ -25,6 +25,8 @@ flowchart LR
 
 ## Drift timeline
 
+<!-- TODO: screenshot of the drift timeline with event markers and statistics cards -->
+
 The drift dashboard displays a timeline visualization showing changes over configurable periods (7, 30, or 90 days). The timeline includes:
 
 - **Statistics cards** — total regressions, improvements, and net change.
@@ -33,7 +35,7 @@ The drift dashboard displays a timeline visualization showing changes over confi
 
 ## Manual snapshots
 
-In addition to the daily automated snapshot, you can capture a snapshot manually:
+In addition to the weekly automated snapshot, you can capture a snapshot manually:
 
 1. Navigate to **Compliance → Compliance Drift**.
 2. Click **Capture Snapshot**.

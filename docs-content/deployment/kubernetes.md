@@ -2,6 +2,24 @@
 
 Deploy OpsDeck on Kubernetes using the included Helm chart, with support for internal or external PostgreSQL, persistent storage, and Ingress.
 
+## Architecture
+
+```mermaid
+graph TD
+    subgraph Kubernetes Cluster
+        Ingress[Ingress / Gateway API] --> Svc[Service :5000]
+        Svc --> Pod1[OpsDeck Pod]
+        Pod1 --> PVC1[PVC: attachments]
+        Pod1 --> PVC2[PVC: logs]
+    end
+
+    subgraph Database
+        Pod1 --> DB{database.type?}
+        DB -->|internal| PG[PostgreSQL Pod<br/>Bitnami subchart]
+        DB -->|external| RDS[(RDS / Aurora<br/>managed DB)]
+    end
+```
+
 ## Prerequisites
 
 - Kubernetes cluster v1.19+
@@ -43,17 +61,27 @@ The key decision is database mode — **internal** (deploys a PostgreSQL pod) or
 
 === "Internal PostgreSQL"
 
+    The Bitnami PostgreSQL subchart is disabled by default. To deploy an in-cluster database, enable it explicitly:
+
     ```yaml
     # values.yaml
     database:
       type: internal
 
     postgresql:
+      enabled: true        # Must be set to true — disabled by default
       auth:
         username: opsdeck
-        password: opsdeck-db-password
-        database: opsdeck
+        password: opsdeck_password
+        database: opsdeck_db
+      primary:
+        persistence:
+          enabled: true
+          size: 1Gi
     ```
+
+    !!! warning
+        Internal PostgreSQL is not designed for multi-replica deployments. Use external PostgreSQL for high availability.
 
 === "External PostgreSQL (RDS/Aurora)"
 
@@ -65,10 +93,13 @@ The key decision is database mode — **internal** (deploys a PostgreSQL pod) or
         host: "my-aurora-db.aws.com"
         port: 5432
         username: "opsdeck"
-        database: "opsdeck"
+        database: "opsdeck_prod"
         existingSecret:
           name: "opsdeck-db-secret"
           key: "password"
+
+    postgresql:
+      enabled: false       # Ensure internal DB is disabled
     ```
 
 ### 3. Configure persistent storage
@@ -158,13 +189,62 @@ spec:
 kubectl apply -f application.yaml
 ```
 
+## Gateway API
+
+As an alternative to Ingress, OpsDeck supports the Kubernetes Gateway API:
+
+```yaml
+gatewayApi:
+  enabled: true
+  gatewayName: "my-gateway"
+  namespace: "default"
+  hostname: "opsdeck.example.com"
+```
+
+This creates an `HTTPRoute` resource pointing to the OpsDeck service. Ensure your cluster has a Gateway API implementation installed (e.g., Envoy Gateway, Istio, Cilium).
+
+## Logging sidecar
+
+The chart supports a Filebeat sidecar for shipping logs to Elasticsearch:
+
+```yaml
+loggingSidecar:
+  enabled: true
+  image:
+    repository: docker.elastic.co/beats/filebeat
+    tag: 8.5.1
+  elasticsearch:
+    host: "elasticsearch"
+    port: 9200
+    protocol: "http"
+    username: "elastic"
+    password: "changeme"
+```
+
+When enabled, Filebeat runs alongside the OpsDeck container and forwards application logs in ECS format.
+
 ## Scaling
 
-OpsDeck can run multiple replicas behind the Kubernetes Service load balancer. Ensure:
+OpsDeck can run multiple replicas behind the Kubernetes Service load balancer:
 
-- External PostgreSQL (internal PostgreSQL is not designed for multi-replica).
-- Shared storage for attachments (ReadWriteMany PVC or S3-compatible storage).
-- `SECRET_KEY` is identical across all replicas (from the shared Secret).
+```mermaid
+graph TD
+    LB[Load Balancer / Ingress] --> R1[OpsDeck replica 1]
+    LB --> R2[OpsDeck replica 2]
+    LB --> R3[OpsDeck replica N]
+    R1 --> RDS[(External PostgreSQL<br/>RDS / Aurora)]
+    R2 --> RDS
+    R3 --> RDS
+    R1 --> EBS[Shared Storage<br/>EFS / EBS / S3]
+    R2 --> EBS
+    R3 --> EBS
+```
+
+Requirements for multi-replica:
+
+- **External PostgreSQL** — internal PostgreSQL is a single pod and not designed for HA.
+- **Shared storage** for attachments — use a ReadWriteMany PVC (EFS) or S3-compatible storage so all replicas access the same files.
+- **Identical `SECRET_KEY`** across all replicas (from the shared Kubernetes Secret).
 
 ## values.yaml reference
 
@@ -176,7 +256,15 @@ OpsDeck can run multiple replicas behind the Kubernetes Service load balancer. E
 | `service.type` | `ClusterIP` | Service type |
 | `service.port` | `5000` | Service port |
 | `database.type` | `internal` | `internal` or `external` |
+| `postgresql.enabled` | `false` | Enable internal PostgreSQL pod (must set `true` for internal mode) |
+| `postgresql.auth.username` | `opsdeck` | Internal DB username |
+| `postgresql.auth.password` | `opsdeck_password` | Internal DB password |
+| `postgresql.auth.database` | `opsdeck_db` | Internal DB name |
 | `persistence.logs.enabled` | `true` | Enable log persistence |
 | `persistence.logs.size` | `500Mi` | Log volume size |
 | `persistence.attachments.enabled` | `true` | Enable attachment persistence |
 | `persistence.attachments.size` | `5Gi` | Attachment volume size |
+| `ingress.enabled` | `false` | Enable Ingress resource |
+| `gatewayApi.enabled` | `false` | Enable Gateway API HTTPRoute |
+| `loggingSidecar.enabled` | `false` | Enable Filebeat logging sidecar |
+| `existingSecret` | `""` | Name of an existing Secret for env vars (Sealed Secrets, external-secrets) |

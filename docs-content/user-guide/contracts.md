@@ -1,5 +1,7 @@
 # Contracts
 
+<!-- TODO: screenshot of the contracts list view with status badges -->
+
 Track contract lifecycles with suppliers, including line items, renewal dates, and document attachments.
 
 ## Contract lifecycle

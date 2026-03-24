@@ -12,6 +12,8 @@ Track SaaS subscriptions with renewal forecasting, cost optimization insights, a
 
 ## Renewal forecasting
 
+<!-- TODO: screenshot of the 12-month subscription renewal forecast -->
+
 OpsDeck generates a 12-month renewal forecast based on active subscriptions:
 
 - View upcoming renewals on the dashboard.

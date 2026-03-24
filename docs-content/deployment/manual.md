@@ -2,9 +2,18 @@
 
 Deploy OpsDeck on a standard Linux server without containers, using Gunicorn behind Nginx.
 
+```mermaid
+graph LR
+    Client[Browser] --> Nginx[Nginx<br/>:443 TLS]
+    Nginx --> Gunicorn[Gunicorn<br/>:5000]
+    Gunicorn --> Flask[Flask App<br/>/opt/opsdeck]
+    Flask --> PG[(PostgreSQL)]
+    Flask --> FS[/opt/opsdeck/data/attachments]
+```
+
 ## System requirements
 
-- Python 3.11+
+- Python 3.11+ (3.13 recommended)
 - PostgreSQL 15+ (16 recommended)
 - Nginx (for reverse proxy and TLS termination)
 - System packages for WeasyPrint: `libpango-1.0-0`, `libpangocairo-1.0-0`, `libgdk-pixbuf2.0-0`, `libffi-dev`, `libcairo2`
