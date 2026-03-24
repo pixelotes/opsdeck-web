@@ -1,6 +1,4 @@
 # build output
-dist/
-!dist/docs/export/opsdeck-docs.pdf
 .output/
 
 # generated types
