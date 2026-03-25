@@ -205,7 +205,18 @@ This creates an `HTTPRoute` resource pointing to the OpsDeck service. Ensure you
 
 ## Logging sidecar
 
-The chart supports a Filebeat sidecar for shipping logs to Elasticsearch:
+The chart supports a Filebeat sidecar for shipping logs to Elasticsearch. Credentials are read from a Kubernetes Secret that you manage.
+
+### 1. Create the Elasticsearch credentials secret
+
+```bash
+kubectl create secret generic elastic-credentials \
+  --from-literal=ELASTICSEARCH_USERNAME=elastic \
+  --from-literal=ELASTICSEARCH_PASSWORD='your-password' \
+  -n opsdeck
+```
+
+### 2. Enable the sidecar in your values
 
 ```yaml
 loggingSidecar:
@@ -214,12 +225,13 @@ loggingSidecar:
     repository: docker.elastic.co/beats/filebeat
     tag: 8.5.1
   elasticsearch:
-    host: "elasticsearch"
+    host: "elasticsearch.monitoring.svc.cluster.local"
     port: 9200
     protocol: "http"
-    username: "elastic"
-    password: "changeme"
+    existingSecret: "elastic-credentials"
 ```
+
+The Secret must contain two keys: `ELASTICSEARCH_USERNAME` and `ELASTICSEARCH_PASSWORD`. Filebeat picks them up as environment variables at runtime.
 
 When enabled, Filebeat runs alongside the OpsDeck container and forwards application logs in ECS format.
 
@@ -267,4 +279,5 @@ Requirements for multi-replica:
 | `ingress.enabled` | `false` | Enable Ingress resource |
 | `gatewayApi.enabled` | `false` | Enable Gateway API HTTPRoute |
 | `loggingSidecar.enabled` | `false` | Enable Filebeat logging sidecar |
+| `loggingSidecar.elasticsearch.existingSecret` | `""` | Secret with `ELASTICSEARCH_USERNAME` and `ELASTICSEARCH_PASSWORD` keys |
 | `existingSecret` | `""` | Name of an existing Secret for env vars (Sealed Secrets, external-secrets) |

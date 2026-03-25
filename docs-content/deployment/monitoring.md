@@ -55,6 +55,10 @@ Since logs are already in ECS format, integration with Elasticsearch is straight
 2. Logs parse natively without custom grok patterns.
 3. Use Kibana to create dashboards for: API access patterns, authentication failures, error rates, and audit events.
 
+### Kubernetes: Filebeat sidecar
+
+The Helm chart includes a Filebeat sidecar that ships logs directly to Elasticsearch. Credentials are stored in a Kubernetes Secret — see the [Logging sidecar](kubernetes.md#logging-sidecar) section in the Kubernetes deployment guide for setup instructions.
+
 ## APScheduler monitoring
 
 Scheduled job execution is logged with:
