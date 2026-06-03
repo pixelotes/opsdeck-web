@@ -258,6 +258,57 @@ Requirements for multi-replica:
 - **Shared storage** for attachments — use a ReadWriteMany PVC (EFS) or S3-compatible storage so all replicas access the same files.
 - **Identical `SECRET_KEY`** across all replicas (from the shared Kubernetes Secret).
 
+## Backup
+
+The chart includes an optional CronJob that performs a compressed database dump and backs up attachments to a restic repository in S3 — all in a single snapshot.
+
+### 1. Create the backup credentials secret
+
+The Secret must contain four keys:
+
+```bash
+kubectl create secret generic opsdeck-backup-secret \
+  --from-literal=RESTIC_REPOSITORY='s3:s3.amazonaws.com/my-bucket/opsdeck-backup' \
+  --from-literal=RESTIC_PASSWORD='your-restic-encryption-password' \
+  --from-literal=AWS_ACCESS_KEY_ID='AKIA...' \
+  --from-literal=AWS_SECRET_ACCESS_KEY='...' \
+  -n opsdeck
+```
+
+### 2. Enable the backup in your values
+
+```yaml
+backup:
+  enabled: true
+  schedule: "0 3 * * *"          # Daily at 3 AM
+  existingSecret: "opsdeck-backup-secret"
+  retention:
+    keepDaily: 7
+    keepWeekly: 4
+    keepMonthly: 6
+```
+
+The restic repository is auto-initialized on the first run. Each snapshot contains two paths:
+
+- `/backup/database/` — a timestamped `pg_dump` compressed with gzip.
+- `/backup/files/` — the full attachments PVC.
+
+### Restore
+
+```bash
+# List available snapshots
+restic -r s3:s3.amazonaws.com/my-bucket/opsdeck-backup snapshots
+
+# Restore database
+restic restore latest --target /tmp/restore --include /backup/database
+gunzip /tmp/restore/backup/database/opsdeck-*.sql.gz
+psql $DATABASE_URL < /tmp/restore/backup/database/opsdeck-*.sql
+
+# Restore attachments
+restic restore latest --target /tmp/restore --include /backup/files
+# Copy contents to the attachments PVC
+```
+
 ## values.yaml reference
 
 | Key | Default | Description |
@@ -280,4 +331,10 @@ Requirements for multi-replica:
 | `gatewayApi.enabled` | `false` | Enable Gateway API HTTPRoute |
 | `loggingSidecar.enabled` | `false` | Enable Filebeat logging sidecar |
 | `loggingSidecar.elasticsearch.existingSecret` | `""` | Secret with `ELASTICSEARCH_USERNAME` and `ELASTICSEARCH_PASSWORD` keys |
+| `backup.enabled` | `false` | Enable backup CronJob |
+| `backup.schedule` | `"0 3 * * *"` | Cron schedule for backups |
+| `backup.existingSecret` | `""` | Secret with `RESTIC_REPOSITORY`, `RESTIC_PASSWORD`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` |
+| `backup.retention.keepDaily` | `7` | Daily snapshots to retain |
+| `backup.retention.keepWeekly` | `4` | Weekly snapshots to retain |
+| `backup.retention.keepMonthly` | `6` | Monthly snapshots to retain |
 | `existingSecret` | `""` | Name of an existing Secret for env vars (Sealed Secrets, external-secrets) |

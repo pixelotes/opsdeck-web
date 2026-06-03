@@ -79,11 +79,56 @@ docker-compose start web
 
 ## Kubernetes backup
 
-For Helm deployments, adapt the strategy:
+The Helm chart includes a built-in CronJob that backs up both the database and attachments to a restic repository in S3 (or any restic-supported backend). Each run produces a single encrypted snapshot containing:
 
-- Use `kubectl exec` instead of `docker-compose exec` to run `pg_dump`.
-- For external PostgreSQL (RDS/Aurora), use the provider's native backup (automated snapshots, point-in-time recovery).
-- For attachment PVCs, use your storage provider's snapshot mechanism or Velero for volume-level backups.
+- `/backup/database/` — a timestamped, gzip-compressed `pg_dump`.
+- `/backup/files/` — the full attachments PVC.
+
+### Setup
+
+1. Create a Secret with your restic and storage credentials:
+
+```bash
+kubectl create secret generic opsdeck-backup-secret \
+  --from-literal=RESTIC_REPOSITORY='s3:s3.amazonaws.com/my-bucket/opsdeck-backup' \
+  --from-literal=RESTIC_PASSWORD='your-restic-encryption-password' \
+  --from-literal=AWS_ACCESS_KEY_ID='AKIA...' \
+  --from-literal=AWS_SECRET_ACCESS_KEY='...' \
+  -n opsdeck
+```
+
+2. Enable the backup in your values:
+
+```yaml
+backup:
+  enabled: true
+  schedule: "0 3 * * *"
+  existingSecret: "opsdeck-backup-secret"
+  retention:
+    keepDaily: 7
+    keepWeekly: 4
+    keepMonthly: 6
+```
+
+The restic repository is auto-initialized on the first run. Retention is enforced automatically after each backup.
+
+### Kubernetes restore
+
+```bash
+# List snapshots
+restic -r s3:s3.amazonaws.com/my-bucket/opsdeck-backup snapshots
+
+# Restore database
+restic restore latest --target /tmp/restore --include /backup/database
+gunzip /tmp/restore/backup/database/opsdeck-*.sql.gz
+psql $DATABASE_URL < /tmp/restore/backup/database/opsdeck-*.sql
+
+# Restore attachments
+restic restore latest --target /tmp/restore --include /backup/files
+# Copy contents back to the attachments PVC
+```
+
+For other cloud backends (GCS, Azure, Backblaze B2), adjust `RESTIC_REPOSITORY` and the credential keys in the Secret accordingly — the CronJob and script are backend-agnostic.
 
 ## Verification
 

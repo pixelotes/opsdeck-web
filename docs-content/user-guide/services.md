@@ -23,19 +23,38 @@ Components are the technical building blocks that support a business service:
 
 ## Dependency mapping
 
-<!-- TODO: screenshot of the service dependency topology graph -->
-
-The topology view shows the complete dependency graph for a service:
+The topology view shows the complete dependency graph for a service. Each dependency can optionally carry a **relationship type** that describes *why* two services are connected:
 
 ```mermaid
 graph TD
-    Portal[Customer Portal] --> API[API Gateway]
+    Portal[Customer Portal] -->|calls_api| API[API Gateway]
     Portal --> CDN[CDN Service]
-    API --> Auth[Auth Service]
-    API --> DB[(PostgreSQL)]
+    API -->|authenticates| Auth[Auth Service]
+    API -->|stores_data| DB[(PostgreSQL)]
     API --> Cache[Redis Cache]
-    Auth --> IDP[Google Workspace]
+    Auth -->|authenticates| IDP[Google Workspace]
 ```
+
+### Adding a dependency
+
+1. From the service detail page, click **+** on the **Depends On** or **Supported Services** card.
+2. Select the target service.
+3. Optionally select a **Relationship Type** from the controlled vocabulary:
+
+| Type | Meaning |
+|---|---|
+| hosts | Runs or hosts the dependent service |
+| authenticates | Provides authentication or identity |
+| provides_access | Grants network access (VPN, bastion, proxy) |
+| stores_data | Stores or persists data for the service |
+| processes_data | Processes transactions or transforms data (payment gateways, ETL) |
+| monitors | Monitors health or performance |
+| backs_up | Provides backup or replication |
+| routes_traffic | Routes or load-balances traffic |
+| calls_api | Consumes an API from the service |
+| sends_data | Sends data or events to the service |
+
+The label is optional — dependencies without a label appear as plain arrows in the graph. Labels appear as badges in the dependency lists and as edge annotations in the Mermaid topology.
 
 The `dependency_graph.py` utility resolves transitive dependencies — if Service A depends on Service B which depends on Database C, the graph shows all three levels.
 
@@ -45,6 +64,7 @@ When an incident or change affects a component:
 
 - Navigate to the affected asset or service.
 - The **Impact** section shows all business services that depend on it.
+- Labeled dependencies enable more precise impact assessment: "if AWS goes down, services it *hosts* die, but services that only *authenticate* through it may have fallback."
 - This informs incident severity assessment and change approval decisions.
 
 ## Compliance context

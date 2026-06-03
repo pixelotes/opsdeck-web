@@ -375,12 +375,13 @@ erDiagram
 
 ## Service catalog
 
-Business services mapped to technical components with dependency tracking.
+Business services mapped to technical components with typed dependency tracking.
 
 ```mermaid
 erDiagram
     BusinessService ||--o{ ServiceComponent : "composed of"
-    BusinessService }o--o{ BusinessService : "depends on"
+    BusinessService ||--o{ ServiceDependency : "parent of"
+    BusinessService ||--o{ ServiceDependency : "child of"
     BusinessService }o--o| User : "owned by"
     BusinessService }o--o| CostCenter : "funded by"
     BusinessService }o--o{ User : "used by"
@@ -400,6 +401,12 @@ erDiagram
         int cost_center_id FK
     }
 
+    ServiceDependency {
+        int parent_id PK_FK
+        int child_id PK_FK
+        enum label "nullable"
+    }
+
     ServiceComponent {
         int id PK
         int service_id FK
@@ -408,6 +415,8 @@ erDiagram
         string role
     }
 ```
+
+The `ServiceDependency` association model connects services with an optional typed label from a controlled vocabulary: `hosts`, `authenticates`, `provides_access`, `stores_data`, `processes_data`, `monitors`, `backs_up`, `routes_traffic`, `calls_api`, `sends_data`. Existing dependencies without a label continue to work normally.
 
 ---
 
