@@ -24,4 +24,8 @@ Track infrastructure and configuration changes with categorization and impact as
 
 ## Change lifecycle
 
-Changes move through statuses from draft through implementation to completion. Each status transition is recorded in the audit trail. Post-implementation, the change record documents whether the outcome matched expectations.
+Changes move through statuses from draft through implementation to completion: **Draft → Pending Approval → Approved → In Progress → Completed** (with **Failed** and **Cancelled** as terminal outcomes). Each status transition is recorded in the audit trail. Post-implementation, the change record documents whether the outcome matched expectations.
+
+## Filtering by status
+
+The change list has a **status** dropdown to narrow the view to a single status (for example, only *Pending Approval* items awaiting a decision). The current filter is reflected in the URL and in the dropdown label, so a filtered view can be bookmarked or shared.

@@ -4,6 +4,14 @@
 
 The dashboard is your landing page after login, providing an at-a-glance overview of operational and compliance status.
 
+OpsDeck offers three complementary dashboard views:
+
+| View | Audience | Page |
+|---|---|---|
+| **Main dashboard** | Everyone — operational overview | this page |
+| **Org Health** | Management — executive risk/compliance posture | [Organizational Health](org-health.md) |
+| **My Dashboard** | Each user — personal tasks and resources | [My Dashboard](my-dashboard.md) |
+
 ## Dashboard widgets
 
 The main dashboard displays:

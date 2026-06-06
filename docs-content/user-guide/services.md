@@ -19,7 +19,10 @@ Components are the technical building blocks that support a business service:
     - **Assets** — servers, databases, network devices.
     - **Software** — applications running on those assets.
     - **Subscriptions** — SaaS services the business service depends on.
+    - **Configuration items** — CMDB configuration records that define the service's setup.
     - **Other services** — upstream or downstream service dependencies.
+
+Linked components appear under the **Infrastructure Components** tab on the service detail page, where each carries a type badge and can be detached.
 
 ## Dependency mapping
 

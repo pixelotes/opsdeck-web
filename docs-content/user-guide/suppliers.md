@@ -8,7 +8,12 @@ The supplier management module tracks your vendors, their compliance status, con
 2. Click **Add Supplier**.
 3. Provide: company name, website, category, and description.
 4. Set the **compliance status**: Approved, Pending Review, Rejected, or Not Assessed.
-5. Add notes about the vendor relationship.
+5. Optionally flag the supplier as **Critical** (see below).
+6. Add notes about the vendor relationship.
+
+## Critical suppliers
+
+Tick **Critical Supplier** on the supplier form to mark a vendor whose failure would materially affect the business. Critical suppliers show a red **Critical** badge wherever they appear — in the supplier list, on the supplier detail page, and in the [Vendor Compliance](vendor-compliance.md) overview — so high-stakes vendors stand out at a glance.
 
 ## Supplier contacts
 

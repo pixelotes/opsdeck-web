@@ -258,6 +258,9 @@ Requirements for multi-replica:
 - **Shared storage** for attachments — use a ReadWriteMany PVC (EFS) or S3-compatible storage so all replicas access the same files.
 - **Identical `SECRET_KEY`** across all replicas (from the shared Kubernetes Secret).
 
+!!! warning "Deployment strategy: `Recreate`"
+    The Deployment uses the **`Recreate`** strategy by default. The logs and attachments volumes are `ReadWriteOnce` (RWO), which cannot be mounted by a new pod while the old one still holds them — a `RollingUpdate` would deadlock on the PVC during upgrades. `Recreate` terminates the old pod before starting the new one, at the cost of a brief downtime per upgrade. Only switch to `RollingUpdate` if you have moved logs and attachments to `ReadWriteMany` storage.
+
 ## Backup
 
 The chart includes an optional CronJob that performs a compressed database dump and backs up attachments to a restic repository in S3 — all in a single snapshot.
@@ -292,6 +295,25 @@ The restic repository is auto-initialized on the first run. Each snapshot contai
 
 - `/backup/database/` — a timestamped `pg_dump` compressed with gzip.
 - `/backup/files/` — the full attachments PVC.
+
+#### Using IRSA instead of access keys (EKS)
+
+On EKS you can avoid storing AWS access keys in the backup Secret by using **IRSA** (IAM Roles for Service Accounts). The backup CronJob then assumes an IAM role through a Kubernetes ServiceAccount, and the Secret only needs `RESTIC_REPOSITORY` and `RESTIC_PASSWORD`.
+
+```yaml
+backup:
+  enabled: true
+  existingSecret: "opsdeck-backup-secret"   # only RESTIC_* keys needed
+  aws:
+    useIRSA: true
+    region: eu-west-1                        # required by STS on some clusters
+  serviceAccount:
+    create: true
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::123456789012:role/opsdeck-backup
+```
+
+The IAM role must grant access to the S3 bucket backing the restic repository.
 
 ### Restore
 
@@ -333,8 +355,13 @@ restic restore latest --target /tmp/restore --include /backup/files
 | `loggingSidecar.elasticsearch.existingSecret` | `""` | Secret with `ELASTICSEARCH_USERNAME` and `ELASTICSEARCH_PASSWORD` keys |
 | `backup.enabled` | `false` | Enable backup CronJob |
 | `backup.schedule` | `"0 3 * * *"` | Cron schedule for backups |
-| `backup.existingSecret` | `""` | Secret with `RESTIC_REPOSITORY`, `RESTIC_PASSWORD`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` |
+| `backup.existingSecret` | `""` | Secret with `RESTIC_REPOSITORY`, `RESTIC_PASSWORD` (+ `AWS_ACCESS_KEY_ID`/`AWS_SECRET_ACCESS_KEY` unless using IRSA) |
 | `backup.retention.keepDaily` | `7` | Daily snapshots to retain |
 | `backup.retention.keepWeekly` | `4` | Weekly snapshots to retain |
 | `backup.retention.keepMonthly` | `6` | Monthly snapshots to retain |
+| `backup.aws.useIRSA` | `false` | Use IRSA (IAM Roles for Service Accounts) instead of AWS keys |
+| `backup.aws.region` | `""` | AWS region for STS/S3 when using IRSA |
+| `backup.serviceAccount.create` | `false` | Create a ServiceAccount for the backup CronJob |
+| `backup.serviceAccount.name` | `""` | ServiceAccount name (defaults to `<release>-backup`) |
+| `backup.serviceAccount.annotations` | `{}` | Annotations for the ServiceAccount (e.g. `eks.amazonaws.com/role-arn`) |
 | `existingSecret` | `""` | Name of an existing Secret for env vars (Sealed Secrets, external-secrets) |

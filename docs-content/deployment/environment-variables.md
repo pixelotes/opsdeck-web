@@ -33,6 +33,7 @@ These are used only on the first run to create the initial admin user.
 | `SMTP_PORT` | SMTP server port. | `587` |
 | `EMAIL_USERNAME` | SMTP authentication username (usually an email). | `''` |
 | `EMAIL_PASSWORD` | SMTP authentication password or app password. | `''` |
+| `EMAIL_SENDER_NAME` | Display name for the email `From` header. When set, outgoing mail shows as `Name <EMAIL_USERNAME>`; when empty, just the address. | `''` |
 
 ## Authentication
 

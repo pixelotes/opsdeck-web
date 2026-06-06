@@ -11,6 +11,8 @@ Available from **Reports** in the sidebar:
 | Report | Content |
 |---|---|
 | Asset inventory | Complete asset list with status, location, assignment, and warranty |
+| Asset reports | Distribution charts including an **Assets by Brand** breakdown |
+| Assets dashboard | Fleet analytics with **fleet distribution by brand** and a **breakdown rate by brand** chart (repair rate per manufacturer over 12 months) |
 | Compliance summary | Per-framework control status and evidence coverage |
 | Subscription forecast | 12-month renewal projection with cost breakdown |
 | UAR findings | Open findings across all comparisons |

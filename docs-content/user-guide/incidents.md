@@ -14,6 +14,10 @@ The incident management module tracks security events from initial report throug
     - **Affected systems** — link assets, services, or users impacted.
     - **Assignee** — the person responsible for investigation.
 
+## Incident statuses
+
+Incidents progress through **Investigating → Contained → Resolved → Closed**. The incident list has a **status** dropdown to filter to a single status; the active filter is reflected in the URL and the dropdown label, so it can be bookmarked or shared.
+
 ## Incident timeline
 
 Every incident has a timeline (`IncidentTimelineEvent`) that tracks the investigation:

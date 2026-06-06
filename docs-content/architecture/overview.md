@@ -96,7 +96,7 @@ src/
 │   ├── onboarding.py        # OnboardingPack, ProcessTemplate, ProcessItem
 │   ├── credentials.py       # Credential, CredentialSecret (Fernet-encrypted)
 │   ├── risk_assessment.py   # RiskAssessment, RiskAssessmentItem, Evidence
-│   ├── ...                  # hiring, bcdr, crm, finance, certificates, etc.
+│   ├── ...                  # hiring, bcdr, finance, certificates, etc.
 │   └── permissions.py       # Module, Permission, AccessLevel enum
 │
 ├── routes/                  # Flask blueprints (50 files, ~15,000 lines)

@@ -43,9 +43,35 @@ The API covers the following entities under `/api/v1/`:
 | `/api/v1/services` | GET | Business services |
 | `/api/v1/changes` | GET, POST | Change records |
 | `/api/v1/incidents` | GET, POST | Security incidents |
-| `/api/v1/onboarding` | GET, POST | Onboarding processes |
+| `/api/v1/onboardings` | GET, POST | Onboarding processes |
 
-Read-only entities (users, assets, etc.) support GET with pagination and filtering. Writable entities (changes, incidents, onboarding) support both GET and POST.
+Read-only entities (users, assets, etc.) support GET with pagination and filtering. Writable entities (changes, incidents, onboardings) support both GET and POST.
+
+## Upsert with `external_ref`
+
+The writable endpoints (`changes`, `incidents`, `onboardings`) are designed for integration with external systems and behave as **idempotent upserts**. Include an `external_ref` — your own stable identifier, such as a ticket key — in the POST body:
+
+- If no record with that `external_ref` exists, a new one is created and the response is **`201 Created`**.
+- If one already exists, it is updated in place and the response is **`200 OK`**.
+
+This lets an external system (a ticketing tool, a SIEM, a script) push the same record repeatedly without creating duplicates. `external_ref` is unique per entity. Omitting it always creates a new record.
+
+```bash
+# First call creates the change (201); a later call with the same
+# external_ref updates it in place (200).
+curl -X POST \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "title": "Deploy v2.0",
+        "change_type": "Normal",
+        "status": "In Progress",
+        "external_ref": "JIRA-1234"
+      }' \
+  https://opsdeck.example.com/api/v1/changes
+```
+
+Users are also upsertable, keyed by **email** rather than `external_ref` (this is how the [Google Users import](data-import.md#google-workspace-import) avoids duplicates).
 
 ## Pagination and filtering
 

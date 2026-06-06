@@ -6,7 +6,7 @@ Track SaaS subscriptions with renewal forecasting, cost optimization insights, a
 
 1. Navigate to **Vendors → Subscriptions**.
 2. Click **Add Subscription**.
-3. Provide: name, supplier, plan details, and cost.
+3. Provide: name, plan details, and cost. A **supplier** is optional — leave it unset for subscriptions that aren't tied to a tracked vendor.
 4. Set **renewal date** and **billing cycle** (monthly, annual, etc.).
 5. Link to a budget and cost center for financial tracking.
 

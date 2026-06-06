@@ -81,9 +81,13 @@ nav:
   - User Guide:
       - user-guide/index.md
       - Getting Started: user-guide/getting-started.md
-      - Dashboard: user-guide/dashboard.md
+      - Dashboards:
+          - Main Dashboard: user-guide/dashboard.md
+          - Organizational Health: user-guide/org-health.md
+          - My Dashboard: user-guide/my-dashboard.md
       - Assets:
           - Hardware Assets: user-guide/assets.md
+          - Brands: user-guide/brands.md
           - Peripherals: user-guide/peripherals.md
           - Software Inventory: user-guide/software.md
           - Locations: user-guide/locations.md
@@ -92,6 +96,7 @@ nav:
       - Compliance & Audits:
           - Frameworks & Controls: user-guide/frameworks.md
           - Compliance Dashboard: user-guide/compliance.md
+          - Vendor Compliance: user-guide/vendor-compliance.md
           - Audit Snapshots: user-guide/audits.md
           - Compliance Drift: user-guide/compliance-drift.md
       - User Access Reviews: user-guide/uar.md
@@ -116,11 +121,8 @@ nav:
       - Certificates: user-guide/certificates.md
       - Change Management: user-guide/changes.md
       - BCDR: user-guide/bcdr.md
-      - CRM:
-          - Contacts & Leads: user-guide/crm.md
-          - Opportunities: user-guide/opportunities.md
-          - Campaigns: user-guide/campaigns.md
       - Reports & Search: user-guide/reports.md
+      - Audit Log: user-guide/audit-log.md
       - Configuration: user-guide/configuration.md
       - Data Import (CLI): user-guide/data-import.md
       - API Usage: user-guide/api.md

@@ -74,6 +74,42 @@ flask data-import contacts contacts.csv
 | `supplier` | Yes | Supplier name (must exist) |
 | `role` | No | Role at the supplier |
 
+## Google Workspace import
+
+In addition to CSV imports, OpsDeck ships a helper script that syncs users straight from **Google Workspace** via the Admin Directory API. It is found at `scripts/google-import.py` (with `scripts/google-import.md` for full details).
+
+Unlike the CSV importer, this script talks to OpsDeck over the [REST API](api.md) and upserts users **by email**, so it is safe to run repeatedly — existing users are skipped, only missing ones are created.
+
+### Prerequisites
+
+A Google Cloud **service account** with domain-wide delegation, authorized for the `admin.directory.user.readonly` scope in the Google Admin console.
+
+Configure the script via environment variables:
+
+| Variable | Required | Description |
+|---|---|---|
+| `GOOGLE_SERVICE_ACCOUNT_JSON` | Yes | Path to the service account JSON key |
+| `GOOGLE_DELEGATED_USER` | Yes | Admin email for domain-wide delegation |
+| `OPSDECK_URL` | Yes | OpsDeck base URL |
+| `OPSDECK_API_TOKEN` | Yes | API token from an admin user |
+| `GOOGLE_DOMAIN` | No | Restrict the import to one domain |
+| `OPSDECK_DEFAULT_ROLE` | No | Role for imported users (default `user`) |
+
+### Running it
+
+```bash
+# Preview what would be imported
+python scripts/google-import.py --dry-run
+
+# Create the missing users
+python scripts/google-import.py --execute
+
+# Limit to a Google org unit
+python scripts/google-import.py --org-unit /Employees --execute
+```
+
+One of `--dry-run` or `--execute` is required. Use `--include-suspended` to also import suspended Google accounts (skipped by default).
+
 ## Validation and error handling
 
 - Duplicate records (matched by email for users, name for suppliers) are skipped with a warning.
