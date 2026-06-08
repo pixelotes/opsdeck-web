@@ -28,6 +28,7 @@ A prioritized timeline of everything that needs your attention, sorted by urgenc
 - **Policy acknowledgements** awaiting your sign-off.
 - **Training courses** overdue or due within 30 days.
 - **Credentials** assigned to you that expire within 30 days.
+- **Service requests** assigned to you that are still open (Pending, Triage, or In Progress), with urgency driven by their due date.
 
 Each task links to the action needed. When nothing is pending, the timeline shows an "all done" empty state.
 
@@ -44,4 +45,4 @@ A tabbed view of everything currently associated with you:
 | **Risks** | Risks you own, with score, status, and treatment strategy |
 
 !!! tip "Action-required alerts"
-    The same pending items feed the notification bell in the navigation bar, so personal tasks surface even when you are working in another module.
+    The same pending items — including open service requests assigned to you — feed the notification bell in the navigation bar, so personal tasks surface even when you are working in another module.
