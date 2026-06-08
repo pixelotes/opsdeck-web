@@ -120,6 +120,7 @@ nav:
       - Credentials Vault: user-guide/credentials.md
       - Certificates: user-guide/certificates.md
       - Change Management: user-guide/changes.md
+      - Service Requests: user-guide/requests.md
       - BCDR: user-guide/bcdr.md
       - Reports & Search: user-guide/reports.md
       - Audit Log: user-guide/audit-log.md

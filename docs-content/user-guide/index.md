@@ -18,5 +18,5 @@ If you're new to OpsDeck, begin with [Getting Started](getting-started.md) to un
 | **Procurement** | Suppliers, contracts, subscriptions, purchases, budgets |
 | **People** | Onboarding/offboarding, hiring pipeline, training, policies |
 | **Services** | Service catalog, dependency mapping, business impact |
-| **Security** | Credentials vault, certificates, change management, BCDR |
+| **Security** | Credentials vault, certificates, change management, service requests, BCDR |
 | **Platform** | Reports, universal search, configuration, data import, REST API |

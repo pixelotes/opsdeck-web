@@ -10,7 +10,7 @@ My Dashboard is the personal, per-user landing view. Where the [main dashboard](
 
 ## Quick actions
 
-A row of shortcut cards for the most common personal actions: report a security incident, request a change, jump to your pending tasks, and open your training courses (with a badge when courses are pending).
+A row of shortcut cards for the most common personal actions: [submit a service request](requests.md), report a security incident, request a change, jump to your pending tasks, and open your training courses (with a badge when courses are pending).
 
 ## Your stats
 
