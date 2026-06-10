@@ -71,3 +71,40 @@ flask db upgrade     # Apply all migrations
 flask init-db        # Create base tables and configuration
 flask seed-db-prod   # Create admin user and seed reference data
 ```
+
+## Diagnostics & repair
+
+After a rough deployment the Alembic version tracking can drift from the actual
+schema (e.g. `alembic_version` missing, stale, or behind). `flask db-doctor`
+diagnoses this and repairs the safe cases:
+
+```bash
+# Diagnose only (read-only). Exits non-zero if problems are found.
+flask db-doctor
+
+# Diagnose and repair where safe
+flask db-doctor --fix
+```
+
+It checks two things:
+
+- **Alembic tracking** — reports `OK`, `MISSING` (no `alembic_version` table),
+  `EMPTY`, `STALE` (current revision not in the migration scripts), or `BEHIND`
+  (pending migrations).
+- **Schema vs models** — uses Alembic autogenerate to compare the live schema
+  against the SQLAlchemy models and lists any drift. Extra tables not present in
+  the models (e.g. optional plugins) are reported separately, not as errors.
+
+With `--fix` it only applies safe repairs:
+
+| Situation | Action |
+| --- | --- |
+| Empty database | `upgrade` (build the schema from migrations) |
+| Tables present, tracking missing/stale, schema already matches | `stamp head` |
+| Pending migrations | `upgrade` |
+| Real schema drift (models ≠ migrations) | Reported only — run `flask db migrate` |
+
+!!! note
+    `db-doctor` never generates `ALTER` statements on its own. When it detects
+    genuine drift between the models and the schema it tells you to create a
+    migration rather than guessing.
