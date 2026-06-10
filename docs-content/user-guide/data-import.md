@@ -25,77 +25,26 @@ Users, Suppliers, Contacts, Assets, Peripherals, Software, Subscriptions, Risks,
 
 ## CLI usage
 
-The Flask CLI covers a subset of the entities above (users, suppliers, contacts, assets, peripherals, software, subscriptions, risks) and is handy for bootstrapping or scripting.
+The Flask CLI runs the **same import engine as the admin UI** — identical types, columns, rules and duplicate handling. It's handy for bootstrapping or scripting. The command name is the type key; list them all with `flask data-import --help`, and see a type's columns with e.g. `flask data-import assets --help`.
 
-All import commands use the Flask CLI. For Docker deployments:
-
-```bash
-# Copy CSV into the container
-docker cp my_data.csv opsdeck_web_1:/app/
-
-# Run the import
-docker exec -it opsdeck_web_1 flask data-import [COMMAND] my_data.csv
-```
-
-For local installations, run directly:
+For Docker deployments:
 
 ```bash
-flask data-import [COMMAND] my_data.csv
+docker cp my_data.csv opsdeck-web-1:/app/
+docker exec -it opsdeck-web-1 flask data-import users my_data.csv
 ```
 
-## CLI: supported entities
-
-### Users
+For local installations:
 
 ```bash
-flask data-import users users.csv
+flask data-import users my_data.csv
 ```
 
-| Column | Required | Description |
-|---|---|---|
-| `name` | Yes | Full name |
-| `email` | Yes | Email (must be unique) |
+### Available commands
 
-Imported users receive the `user` role by default. Random passwords are generated and displayed in console output.
+`users`, `suppliers`, `contacts`, `assets`, `peripherals`, `software`, `subscriptions`, `risks`, `locations`, `tags`, `brands`, `asset_models`, `cost_centers`, `budgets`, `payment_methods`.
 
-### Assets
-
-```bash
-flask data-import assets assets.csv
-```
-
-| Column | Required | Description |
-|---|---|---|
-| `name` | Yes | Asset name |
-| `model` | No | Model identifier |
-| `serial_number` | No | Serial number |
-| `asset_type` | No | Type (laptop, server, etc.) |
-| `status` | No | Lifecycle status |
-
-### Suppliers
-
-```bash
-flask data-import suppliers suppliers.csv
-```
-
-| Column | Required | Description |
-|---|---|---|
-| `name` | Yes | Company name |
-| `website` | No | URL |
-| `category` | No | Supplier category |
-
-### Contacts
-
-```bash
-flask data-import contacts contacts.csv
-```
-
-| Column | Required | Description |
-|---|---|---|
-| `name` | Yes | Contact name |
-| `email` | Yes | Email |
-| `supplier` | Yes | Supplier name (must exist) |
-| `role` | No | Role at the supplier |
+Columns and required fields are exactly those documented for the UI above (e.g. `assets`/`peripherals` require `serial_number`; `subscriptions` requires `supplier_name` and `name`). Each run reports `created / skipped / errors` with a per-row reason for anything not created; `users` prints the generated passwords once.
 
 ## Google Workspace import
 
