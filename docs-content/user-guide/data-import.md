@@ -1,8 +1,31 @@
-# Data Import (CLI)
+# Data Import
 
-OpsDeck provides CLI commands for bulk CSV import, useful for initial system bootstrapping or migrating from legacy tools.
+OpsDeck supports bulk CSV import from two places: the **admin UI** (recommended) and the **Flask CLI**.
 
-## General usage
+## From the admin UI (recommended)
+
+**Administration → Import Data** (requires *Administration* write access) imports records from a CSV with a safe, guided workflow:
+
+1. **Pick the entity type** and **download its CSV template** — the template's header row is exactly the columns that type accepts.
+2. Fill in the CSV and **upload it**.
+3. **Review the preview**: every row is classified as **create**, **skipped** (e.g. a duplicate that already exists) or **error** (e.g. a missing required value). Nothing is written to the database yet.
+4. **Confirm** to create the records. For user imports the generated passwords are shown once, on the results page — copy them then.
+
+Each type's card lists its **required** and **optional** columns. Where a referenced object is given by name (an asset's brand/model/location, a contact's supplier, a subscription's budget…) it is matched by name and, for some types, created automatically if missing.
+
+### Supported types
+
+Users, Suppliers, Contacts, Assets, Peripherals, Software, Subscriptions, Risks, Locations, Tags, Brands, Asset Models, Cost Centers, Budgets and Payment Methods.
+
+!!! tip
+    Import reference data first (Locations, Brands, Budgets, Suppliers…) so that later imports (Assets, Subscriptions…) link to existing records instead of auto-creating partial ones.
+
+!!! note
+    Assets and Peripherals require a `serial_number`; Subscriptions require both `supplier_name` (which must already exist) and `name`.
+
+## CLI usage
+
+The Flask CLI covers a subset of the entities above (users, suppliers, contacts, assets, peripherals, software, subscriptions, risks) and is handy for bootstrapping or scripting.
 
 All import commands use the Flask CLI. For Docker deployments:
 
@@ -20,7 +43,7 @@ For local installations, run directly:
 flask data-import [COMMAND] my_data.csv
 ```
 
-## Supported entities
+## CLI: supported entities
 
 ### Users
 
