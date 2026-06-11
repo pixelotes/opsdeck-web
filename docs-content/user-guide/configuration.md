@@ -33,11 +33,31 @@ Tags provide flexible, cross-entity categorization:
 
 ## Notification settings
 
-Configure per-event notification preferences:
+Configure per-event notifications in **Settings → Notifications**. Each system
+event (license expiring, subscription renewal, certificate expiring, compliance
+breach, …) maps to an email template and a set of delivery channels. Queued
+messages are delivered by the background dispatcher (every 5 minutes), with
+exponential-backoff retries on failure.
 
-- Which events trigger notifications (asset assignment, incident creation, renewal approaching).
-- Notification channels: email (via SMTP) and/or webhook (Slack, Discord).
-- Per-user notification preferences can override global settings.
+For every event you can enable or disable it, pick the template, set the
+days-before-event offset, and select one or more delivery channels:
+
+| Channel | Destination | Notes |
+|---------|-------------|-------|
+| **Email** | Recipient address (via SMTP) | Default channel. Requires SMTP configured. |
+| **Slack** | DM to the user (resolved by email) or a fixed channel ID | Requires `SLACK_BOT_TOKEN`. Set a channel ID (e.g. `C12345`) for broadcasts, or leave empty to DM the recipient. |
+| **Webhook** | Generic HTTP endpoint | POST with a structured JSON payload (event code, timestamp, target, recipient). |
+| **Discord** | Discord incoming webhook | POST `{"content": "..."}`; subject in bold, body as plain text (capped at Discord's 2000-character limit). |
+
+### Discord
+
+To deliver an event to Discord:
+
+1. In Discord, open **Server Settings → Integrations → Webhooks → New Webhook**, choose the target channel, and **Copy Webhook URL** (`https://discord.com/api/webhooks/...`).
+2. In OpsDeck, open **Settings → Notifications**, edit the event, tick the **Discord** channel, and paste the URL into **Discord Webhook URL**.
+3. Save. The next time the event fires, the message is posted to that Discord channel.
+
+Per-user notification preferences can override global settings.
 
 ## Configuration versioning
 

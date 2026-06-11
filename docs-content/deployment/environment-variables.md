@@ -56,8 +56,11 @@ These are used only on the first run to create the initial admin user.
 
 | Variable | Description | Default |
 |---|---|---|
-| `WEBHOOK_URL` | External webhook URL for notifications (Slack, Discord). | `''` |
+| `WEBHOOK_URL` | Optional global default webhook URL. Per-event webhook and Discord URLs are configured in **Settings → Notifications**, not here. | `''` |
 | `SLACK_BOT_TOKEN` | Slack bot token for direct messaging and channel notifications. | `''` |
+
+Discord and generic-webhook delivery URLs are set per notification event in the
+app (**Settings → Notifications**); see the [Configuration guide](../user-guide/configuration.md#notification-settings).
 
 ## Performance tuning
 
