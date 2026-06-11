@@ -33,7 +33,7 @@ Click **New Rule** and fill in:
 | Field | What it does |
 |---|---|
 | **Name** / **Description** | Labels for the rule (shown in the list). |
-| **Entity** | The kind of record to watch — Asset, Subscription, Risk, Incident, Credential, Certificate, Supplier, Contract, Change, Request, Candidate, Policy, Compliance Rule, License, Peripheral. |
+| **Entity** | The kind of record to watch — Asset, Subscription, Risk, Incident, Credential, Certificate, Supplier, Contract, Change, Request, Candidate, Policy, Compliance Rule, License, Peripheral, User, Group, Permission. Or **All entities** (`*`) to fire on any of them — handy for a single "anything was deleted" rule, where `entity_type`/`entity` name the actual record. |
 | **Action** | `create`, `update`, `delete`, or `any` (matches all three). |
 | **Email Template** | The message to send. Templates are managed under **Communications**. |
 | **Send to** | Who receives it (see below). |
@@ -52,8 +52,8 @@ In this version recipients are **static**:
 Channel selection mirrors the system notifications screen. Each rule carries its
 own destination settings, so different rules can post to different places:
 
-- **Slack** — optional fixed channel ID, or a DM to the recipient (requires `SLACK_BOT_TOKEN`).
-- **Webhook** — an HTTP endpoint that receives a JSON payload.
+- **Slack** — two options: paste a **Slack Incoming Webhook URL** (`https://hooks.slack.com/services/...`, easiest, no bot token needed) — this takes precedence; or use the bot API with a **Channel ID** (`C12345`) or a DM to the recipient (requires `SLACK_BOT_TOKEN`). The Channel ID field is a channel ID, **not** a webhook URL.
+- **Webhook** — an HTTP endpoint that receives a structured JSON payload. (Note: a generic webhook posts JSON that Slack's incoming webhooks reject — to reach Slack, use the Slack channel's webhook field above.)
 - **Discord** — a Discord incoming-webhook URL (`https://discord.com/api/webhooks/...`).
 
 ### Template variables
@@ -69,6 +69,7 @@ Event-rule templates receive a generic context describing the change:
 | `actor` | `alice@acme.com` | Who made the change (or *system*) |
 | `changes` | `{"status": {"old": "active", "new": "retired"}}` | Field-by-field diff (updates only) |
 | `timestamp` | `2026-06-11 09:14` | When the change happened |
+| `event_url` | `https://opsdeck.acme.com/assets/42` | Absolute link to the record's detail page. Requires `APP_BASE_URL` to be set (otherwise empty); guard it with `{% if event_url %}`. |
 
 Example subject and body:
 
@@ -111,6 +112,14 @@ automatically. Use them as-is or copy one as the starting point for your own.
 
 From the list you can **enable/disable** a rule (the toggle), **edit** it, or
 **delete** it. Disabled rules are skipped by the engine but kept for later.
+
+### Testing a rule
+
+The **Test** (paper-plane) button sends a one-off notification immediately through
+the rule's configured channels, using placeholder sample data (`TEST_ENTITY`,
+`FOO`/`BAR`, …) for every variable. It bypasses the queue, so you can verify
+channel wiring without creating a real record and waiting. Email and Slack DMs go
+to your own address; the per-channel result is shown in a flash message.
 
 ## Event rules vs. system notifications
 

@@ -153,6 +153,12 @@ sudo nginx -t
 sudo systemctl reload nginx
 ```
 
+!!! important "Set `TRUST_PROXY=1`"
+    Nginx forwards `X-Forwarded-Proto`/`Host` above, but the app only honours them
+    when `TRUST_PROXY=1` is set in its environment. Without it, absolute URLs (email
+    links, OAuth callbacks) use the internal host and form redirects can hang. See
+    [Environment Variables](environment-variables.md#general).
+
 ## File permissions
 
 ```bash

@@ -9,6 +9,8 @@ OpsDeck is configured entirely via environment variables. Set them in your OS, i
 | `SECRET_KEY` | Cryptographic signing key for sessions, CSRF, and credential encryption. Must be long and random. | `your-secret-key-change-this` | **Yes** |
 | `FLASK_APP` | Flask application entry point. | `run:app` | Yes |
 | `FLASK_DEBUG` | Enable debug mode. `1` for development, `0` for production. | `0` | No |
+| `TRUST_PROXY` | Honour `X-Forwarded-For/Proto/Host/Prefix` from a reverse proxy so the app sees the real public scheme/host. **Set to `1` when running behind a proxy** (otherwise absolute URLs — email links, OAuth callbacks — and redirects use the internal host). | `0` | No |
+| `APP_BASE_URL` | Public base URL of the deployment (e.g. `https://opsdeck.acme.com`). Used to build absolute links in notifications (the `event_url` variable in event rules). When empty, such links fall back to relative paths. | `''` | No |
 
 ## Database
 

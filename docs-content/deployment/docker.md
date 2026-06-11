@@ -149,6 +149,12 @@ Do not expose port 5000 directly to the internet. Place a reverse proxy in front
       - "traefik.http.routers.opsdeck.tls.certresolver=letsencrypt"
     ```
 
+!!! important "Set `TRUST_PROXY=1` behind a proxy"
+    The proxy forwards `X-Forwarded-Proto`/`Host`, but the app ignores them unless
+    `TRUST_PROXY=1` is set on the `web` service. Without it, the app builds URLs from
+    the internal host — email links and OAuth callbacks point to the wrong place, and
+    form redirects (e.g. offboarding transfers) can hang. See [Environment Variables](environment-variables.md#general).
+
 ## Network isolation
 
 Isolate the database from external access:
