@@ -27,6 +27,11 @@ In addition to data changes, security-relevant events — logins (including OAut
 !!! warning "Sensitive values are never stored"
     Password hashes, secrets, tokens, API keys, and encrypted values are excluded from the change diff. Bookkeeping fields like `created_at`/`updated_at` are also omitted to keep the diff readable.
 
+!!! tip "The audit log also powers Event Rules"
+    The same change trail is the source for the event engine. Configure
+    [Event Rules](event-rules.md) to send a notification whenever a chosen kind of
+    record is created, updated, or deleted.
+
 ## Reviewing the log
 
 The log is a paginated table ordered newest-first. Click the **details** (eye) icon on any update to open a modal showing the exact fields that changed and their before/after values.

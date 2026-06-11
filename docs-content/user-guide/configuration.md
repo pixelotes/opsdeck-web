@@ -59,6 +59,10 @@ To deliver an event to Discord:
 
 Per-user notification preferences can override global settings.
 
+These are the built-in, time-based events. To send notifications when a record is
+created, updated, or deleted, use [Event Rules](event-rules.md) instead — they
+share the same channels and delivery queue.
+
 ## Configuration versioning
 
 The `ConfigurationVersion` model tracks changes to system configuration over time, providing an audit trail of who changed what settings and when.

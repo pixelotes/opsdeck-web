@@ -20,7 +20,8 @@ Jobs are defined programmatically in the application factory (`src/__init__.py`)
 | Subscription renewal alerts | Daily | `notifications` | Checks for subscriptions approaching renewal and sends notifications |
 | Credential expiry alerts | Daily | `notifications` | Checks for credentials approaching expiry date |
 | Certificate expiry alerts | Daily | `notifications` | Checks for certificates approaching expiry date |
-| Communications queue | Every 5 minutes | `notifications` | Processes scheduled emails, Slack messages, and webhooks |
+| Event engine | Every 2 minutes | `event_engine` | Matches recent audit-log changes against [Event Rules](../user-guide/event-rules.md) and queues notifications |
+| Communications queue | Every 5 minutes | `notifications` | Processes scheduled emails, Slack messages, webhooks, and Discord posts |
 | Exchange rate sync | Daily at 3:00 AM | `finance_service` | Syncs currency exchange rates for multi-currency support |
 | Data retention | Weekly | — | Archives old records per configured retention policies |
 

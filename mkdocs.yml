@@ -125,6 +125,7 @@ nav:
       - Reports & Search: user-guide/reports.md
       - Audit Log: user-guide/audit-log.md
       - Configuration: user-guide/configuration.md
+      - Event Rules: user-guide/event-rules.md
       - Data Import: user-guide/data-import.md
       - API Usage: user-guide/api.md
 
