@@ -68,6 +68,7 @@ Event-rule templates receive a generic context describing the change:
 | `action` | `update` | What happened |
 | `actor` | `alice@acme.com` | Who made the change (or *system*) |
 | `changes` | `{"status": {"old": "active", "new": "retired"}}` | Field-by-field diff (updates only) |
+| `timestamp` | `2026-06-11 09:14` | When the change happened |
 
 Example subject and body:
 
@@ -75,6 +76,36 @@ Example subject and body:
 Subject:  {{ entity_type }} {{ entity }} was {{ action }}d
 Body:     {{ actor }} {{ action }}d {{ entity }}.
 ```
+
+### Ready-made templates
+
+OpsDeck ships three generic, ready-to-use templates you can attach to a rule
+straight away — **Event: Record Created**, **Event: Record Updated**, and
+**Event: Record Deleted**. The "Updated" one renders the field-by-field diff
+automatically. Use them as-is or copy one as the starting point for your own.
+
+!!! note "Best practice: guard your variables with `{% if %}`"
+    Templates can be reused across different events, but not every variable exists
+    in every context — for example `changes` is only present on updates, and the
+    onboarding-style `{{ user.name }}` is not part of the event context at all.
+    Always wrap optional variables in a conditional so the message stays clean:
+
+    ```jinja
+    {% if changes %}
+      Fields changed:
+      {% for field, vals in changes.items() %}
+        - {{ field }}: {{ vals.old }} → {{ vals.new }}
+      {% endfor %}
+    {% else %}
+      (no field details)
+    {% endif %}
+    ```
+
+    Guard at the variable itself (`{% if user %}{{ user.name }}{% endif %}`), not
+    inside it (`{% if user.name %}` would still fail when `user` is absent). As a
+    safety net, a missing variable now renders as **empty** rather than leaking the
+    raw `{{ ... }}` into the notification — but an explicit `{% if %}` keeps the
+    wording right.
 
 ## Managing rules
 
